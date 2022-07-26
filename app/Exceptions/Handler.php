@@ -3,12 +3,13 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+	use TratarAPI;
+
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -59,13 +60,7 @@ class Handler extends ExceptionHandler
 	 */
 	public function render($request, Throwable $e) {
 		if ($request->is("api/*")) {
-			if ($e instanceof ValidationException) {
-				return response()->json([
-					"HTTP" => 400,
-					"código" => "validação_erro",
-					"mensagem" => "Erro de validação dos dados enviados",
-				] + $e->errors(), 400);
-			}
+			return $this->pegarExceçãoJSON($e);
 		}
 		return parent::render($request, $e);
 	}

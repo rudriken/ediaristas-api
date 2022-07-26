@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DiaristaPublicoCollection;
 use App\Servicos\ConsultaCEP\InterfaceConsultaCEP;
+use Illuminate\Validation\ValidationException;
 
 class ObtemDiaristasPorCEP extends Controller {
 	/**
@@ -26,7 +27,9 @@ class ObtemDiaristasPorCEP extends Controller {
 		]);
 		$dados = $serviçoCEP->buscar($request->cep);
 		if ($dados === false) { 
-			return response()->json(["erro" => "CEP inválido"], 400); 
+			throw ValidationException::withMessages(
+				["cep" => "CEP inválido ou não encontrado"]
+			);
 		}
         $diaristas = User::diaristasDisponívelCidade($dados->ibge);
         $quantidadeDiaristas = User::diaristasDisponívelCidadeQuantidade($dados->ibge);
