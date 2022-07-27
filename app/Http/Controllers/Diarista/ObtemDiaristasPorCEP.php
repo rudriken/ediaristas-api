@@ -10,6 +10,12 @@ use App\Servicos\ConsultaCEP\InterfaceConsultaCEP;
 
 
 class ObtemDiaristasPorCEP extends Controller {
+	private ObterDiaristasPorCEP $obterDiaristasPorCEP;
+
+	public function __construct(ObterDiaristasPorCEP $ação) {
+		$this->obterDiaristasPorCEP = $ação;
+	}
+
 	/**
 	 * Busca diaristas pelo CEP
 	 *
@@ -17,13 +23,12 @@ class ObtemDiaristasPorCEP extends Controller {
 	 * @param InterfaceConsultaCEP $serviçoCEP
 	 * @return DiaristaPublicoCollection
 	 */
-    public function __invoke(
-		Request $request, ObterDiaristasPorCEP $ação
-	): DiaristaPublicoCollection {
+    public function __invoke(Request $request): DiaristaPublicoCollection {
 		$request->validate([
 			"cep" => ["required", "numeric"],
 		]);
-		[$diaristas, $quantidadeDiaristas, $localidade] = $ação->executar($request->cep);
+		[$diaristas, $quantidadeDiaristas, $localidade] = 
+			$this->obterDiaristasPorCEP->executar($request->cep);
 		return new DiaristaPublicoCollection(
 			$diaristas, $quantidadeDiaristas, $localidade
 		);

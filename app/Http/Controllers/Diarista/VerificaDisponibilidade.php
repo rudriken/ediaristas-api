@@ -7,24 +7,29 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Actions\Diarista\ObterDiaristasPorCEP;
 
-class VerificaDisponibilidade extends Controller
-{
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request, ObterDiaristasPorCEP $ação): JsonResponse {
+class VerificaDisponibilidade extends Controller {
+	private ObterDiaristasPorCEP $obterDiaristasPorCEP;
+
+	public function __construct(ObterDiaristasPorCEP $ação) {
+		$this->obterDiaristasPorCEP = $ação;
+	}
+
+	/**
+	 * Retorna a disponibilidade de diaristas para um CEP
+	 *
+	 * @param Request $request
+	 * @return JsonResponse
+	 */
+    public function __invoke(Request $request): JsonResponse {
 		$request->validate([
 			"cep" => ["required", "numeric"],
 		]);
-		[$diaristas] = $ação->executar($request->cep);
+		[$diaristas] = $this->obterDiaristasPorCEP->executar($request->cep);
 		return resposta_padrão(
 			200, 
 			"sucesso", 
 			"Disponiblidade verificada com sucesso", 
 			["disponibilidade" => $diaristas->isNotEmpty()]
-		); // "isNotEmpty" é um método da própria Collection do Laravel
+		);
     }
 }

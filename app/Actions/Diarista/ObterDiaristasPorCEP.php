@@ -13,6 +13,12 @@ class ObterDiaristasPorCEP {
 		$this->serviçoCEP = $ação;
 	}
 
+	/**
+	 * Busca diaristas a partir de um CEP
+	 *
+	 * @param string $cep
+	 * @return array
+	 */
 	public function executar(string $cep): array {
 		$dados = $this->serviçoCEP->buscar($cep);
 		if ($dados === false) { 
