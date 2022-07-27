@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Diarista;
 
-use App\Actions\Diarista\ObterDiaristasPorCEP;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Actions\Diarista\ObterDiaristasPorCEP;
 use App\Http\Resources\DiaristaPublicoCollection;
 use App\Servicos\ConsultaCEP\InterfaceConsultaCEP;
 
