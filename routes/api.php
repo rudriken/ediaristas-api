@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Servico\ObtemServicos;
 use App\Http\Controllers\Endereço\BuscaCepApiExterna;
 use App\Http\Controllers\Diarista\ObtemDiaristasPorCEP;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
+
+Route::get("/", IndexController::class);
 
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
 	->name("diaristas.busca_por_cep");
