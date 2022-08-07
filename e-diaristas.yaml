@@ -13,8 +13,29 @@ servers:
   - url: https://ediaristas-api-php.herokuapp.com
     description: Aplicação Laravel Heroku
 tags:
+  - name: Api
   - name: Diaristas
+  - name: Enderecos
 paths:
+  /api:
+    get:
+      operationId: getLinks
+      tags:
+        - Api
+      description: Exibe os links iniciais da aplicação
+      summary: home
+      responses:
+        "200":
+          description: Exibição realizada com sucesso
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  links:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/LinkResponse"
   /api/diaristas/localidades:
     get:
       operationId: getDiaristasLocalidades
@@ -36,6 +57,72 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/DiaristaLocalidadePageResponse"
+        "400":
+          description: CEP não informado ou inválido
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: CEP informado não encontrado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/diaristas/disponibilidade:
+    get:
+      operationId: getDisponibilidade
+      tags:
+        - Diaristas
+      description: Verificar a disponibilidade de diaristas por CEP
+      summary: verifica disponibilidade
+      parameters:
+        - name: cep
+          in: query
+          required: true
+          schema:
+            type: string
+          example: "38402039"
+      responses:
+        "200":
+          description: Verificação realizada com sucesso
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/DisponibilidadeResponse"
+        "400":
+          description: CEP não informado ou inválido
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: CEP informado não encontrado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/enderecos:
+    get:
+      operationId: getEndereco
+      tags:
+        - Enderecos
+      description: Buscar dados de um endereço por CEP
+      summary: busca endereço
+      parameters:
+        - name: cep
+          in: query
+          required: true
+          schema:
+            type: string
+          example: "38402039"
+      responses:
+        "200":
+          description: Busca realizada com sucesso
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/EnderecoResponse"
         "400":
           description: CEP não informado ou inválido
           content:
@@ -82,3 +169,41 @@ components:
           format: date-time
         message:
           type: string
+    EnderecoResponse:
+      type: object
+      properties:
+        cep:
+          type: string
+        logradouro:
+          type: string
+        complemento:
+          type: string
+        bairro:
+          type: string
+        localidade:
+          type: string
+        uf:
+          type: string
+        ibge:
+          type: string
+    DisponibilidadeResponse:
+      type: object
+      properties:
+        disponibilidade:
+          type: boolean
+    LinkResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+        rel:
+          type: string
+        uri:
+          type: string
+          format: uri

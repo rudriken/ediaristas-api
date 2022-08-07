@@ -20,7 +20,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nome_completo',
+        'cpf',
+        'nascimento',
+        'foto_documento',
+        'telefone',
+        'tipo_usuario',
+        'chave_pix',
         'email',
         'password',
     ];
@@ -87,7 +93,7 @@ class User extends Authenticatable
 
 	/**
 	 * Busca 6 diaristas por código do IBGE
-	 * 
+	 *
 	 * @param integer $códigoIBGE
 	 * @return Collection
 	 */
@@ -98,7 +104,7 @@ class User extends Authenticatable
 
 	/**
 	 * Retorna a quantidade de diaristas por código do IBGE
-	 * 
+	 *
 	 * @param integer $códigoIBGE
 	 * @return integer
 	 */
