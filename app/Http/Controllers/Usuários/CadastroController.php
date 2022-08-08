@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Usuários;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\Usuario;
 use App\Http\Controllers\Controller;
 use App\Actions\Usuário\CriarUsuario;
+use App\Http\Requests\UsuarioCadastroRequest;
 
 class CadastroController extends Controller
 {
@@ -21,13 +23,13 @@ class CadastroController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsuarioCadastroRequest $request)
     {
         $usuário = $this->criarUsuário->executar(
             $request->except("password_confirmation"),
             $request->foto_documento
         );
-        return $usuário;
+        return new Usuario($usuário);
     }
 
     /**
