@@ -8,8 +8,8 @@ use \Illuminate\Http\JsonResponse;
 trait TratarAPI {
 
 	/**
-	 * Trata as exceções da nossa API 
-	 * 
+	 * Trata as exceções da nossa API
+	 *
 	 * @param \Throwable $erro
 	 * @return JsonResponse
 	 */
@@ -23,7 +23,7 @@ trait TratarAPI {
 
 	/**
 	 * Retorna uma resposta para erro de validação
-	 * 
+	 *
 	 * @param ValidationException $erro
 	 * @return JsonResponse
 	 */
@@ -35,7 +35,7 @@ trait TratarAPI {
 
 	/**
 	 * Retorna uma resposta para erro genérico
-	 * 
+	 *
 	 * @param \Throwable $erro
 	 * @return JsonResponse
 	 */
