@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\User;
+use App\Mail\UsuarioCadastrado;
+use Illuminate\Support\Facades\Mail;
 
 class UserObserver
 {
@@ -19,5 +21,16 @@ class UserObserver
             return;
         }
         $novoUsuário->reputacao = User::avg("reputacao");
+    }
+
+    /**
+     * Envio do e-mail de boas-vindas para o novo usuário
+     *
+     * @param User $novoUsuário
+     * @return void
+     */
+    public function created(User $novoUsuário): void
+    {
+        Mail::to($novoUsuário->email)->send(new UsuarioCadastrado);
     }
 }
