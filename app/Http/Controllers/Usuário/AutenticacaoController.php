@@ -31,4 +31,11 @@ class AutenticacaoController extends Controller
             "mensagem" => "Logout com sucesso",
         ]);
     }
+
+    public function atualizar()
+    {
+        return response()->json([
+            "acesso" => Auth::refresh(),
+        ]);
+    }
 }

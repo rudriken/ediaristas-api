@@ -15,6 +15,8 @@ Route::post("/token", [AutenticacaoController::class, "login"])->name("autentica
 Route::get("/eu", [AutenticacaoController::class, "eu"])->name("usuários.show");
 Route::post("/logout", [AutenticacaoController::class, "logout"])
     ->name("autenticação.logout");
+Route::post("/token/atualizar", [AutenticacaoController::class, "atualizar"])
+    ->name("autenticação.atualizar");
 
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
 	->name("diaristas.busca_por_cep");
