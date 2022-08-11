@@ -14,9 +14,7 @@ class AutenticacaoController extends Controller
         if (!$token = Auth::attempt($credenciais)) {
             return response()->json(["erro" => "Não autorizado"], 401);
         }
-        return response()->json([
-            "acesso" => $token,
-        ]);
+        return resposta_token($token);
     }
 
     public function eu()
@@ -34,8 +32,6 @@ class AutenticacaoController extends Controller
 
     public function atualizar()
     {
-        return response()->json([
-            "acesso" => Auth::refresh(),
-        ]);
+        return resposta_token(Auth::refresh());
     }
 }
