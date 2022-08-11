@@ -13,6 +13,8 @@ Route::get("/", IndexController::class);
 
 Route::post("/token", [AutenticacaoController::class, "login"])->name("autenticação.login");
 Route::get("/eu", [AutenticacaoController::class, "eu"])->name("usuários.show");
+Route::post("/logout", [AutenticacaoController::class, "logout"])
+    ->name("autenticação.logout");
 
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
 	->name("diaristas.busca_por_cep");

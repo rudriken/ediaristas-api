@@ -23,4 +23,12 @@ class AutenticacaoController extends Controller
     {
         return Auth::user();
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return response()->json([
+            "mensagem" => "Logout com sucesso",
+        ]);
+    }
 }
