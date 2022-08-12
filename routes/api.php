@@ -12,6 +12,7 @@ use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 Route::get("/", IndexController::class);
 
 Route::get("/eu", [AutenticacaoController::class, "eu"])
+    ->middleware("auth:api")
     ->name("usuários.show");
 
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
