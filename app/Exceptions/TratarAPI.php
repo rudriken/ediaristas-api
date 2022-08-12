@@ -2,8 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
-use \Illuminate\Http\JsonResponse;
 
 trait TratarAPI {
 
@@ -17,6 +18,10 @@ trait TratarAPI {
 		if ($erro instanceof ValidationException) {
 			return $this->erroDeValidação($erro);
 		}
+
+        if ($erro instanceof AuthenticationException) {
+            return $this->erroDeAutenticação($erro);
+        }
 
 		return $this->erroGenérico($erro);
 	}
@@ -32,6 +37,16 @@ trait TratarAPI {
 			400, "validação_erro", "Erro de validação dos dados enviados", $erro->errors()
 		);
 	}
+
+	/**
+	 * Retorna uma resposta para erro de autenticação
+	 *
+	 * @param AuthenticationException $erro
+	 * @return JsonResponse
+	 */
+    protected function erroDeAutenticação(AuthenticationException $erro): JsonResponse {
+        return resposta_padrão(401, "token_não_validado", $erro->getMessage());
+    }
 
 	/**
 	 * Retorna uma resposta para erro genérico
