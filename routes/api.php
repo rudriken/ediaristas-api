@@ -11,17 +11,16 @@ use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 
 Route::get("/", IndexController::class);
 
-Route::post("/token", [AutenticacaoController::class, "login"])->name("autenticação.login");
-Route::get("/eu", [AutenticacaoController::class, "eu"])->name("usuários.show");
-Route::post("/logout", [AutenticacaoController::class, "logout"])
-    ->name("autenticação.logout");
-Route::post("/token/atualizar", [AutenticacaoController::class, "atualizar"])
-    ->name("autenticação.atualizar");
+Route::get("/eu", [AutenticacaoController::class, "eu"])
+    ->name("usuários.show");
 
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
 	->name("diaristas.busca_por_cep");
 Route::get("/diaristas/disponibilidade", VerificaDisponibilidade::class)
 	->name("endereços.disponibilidade");
-Route::get("/enderecos", BuscaCepApiExterna::class)->name("endereços.cep");
-Route::get("/servicos", ObtemServicos::class)->name("serviços.index");
-Route::post("/usuarios", [CadastroController::class, "store"])->name("usuários.create");
+Route::get("/enderecos", BuscaCepApiExterna::class)
+    ->name("endereços.cep");
+Route::get("/servicos", ObtemServicos::class)
+    ->name("serviços.index");
+Route::post("/usuarios", [CadastroController::class, "store"])
+    ->name("usuários.create");
