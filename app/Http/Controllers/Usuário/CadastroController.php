@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Usuário;
 use Illuminate\Http\Request;
 use App\Http\Resources\Usuario;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Actions\Usuário\CriarUsuario;
 use App\Http\Requests\UsuarioCadastroRequest;
 
@@ -29,7 +30,11 @@ class CadastroController extends Controller
             $request->except("password_confirmation"),
             $request->foto_documento
         );
-        return new Usuario($usuário);
+        $token = Auth::attempt([
+            "email" => $usuário->email,
+            "password" => $request->password,
+        ]);
+        return new Usuario($usuário, $token);
     }
 
     /**

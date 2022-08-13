@@ -2,10 +2,19 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Usuario extends JsonResource
 {
+    private string $token;
+
+    public function __construct($recurso, $símbolo = "")
+    {
+        $this->token = $símbolo;
+        parent::__construct($recurso); /* passando para a classe-mãe os dados do usuário */
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -14,17 +23,28 @@ class Usuario extends JsonResource
      */
     public function toArray($request): array
     {
-        return [
-            "id"            => $this->id,
-            "nome_completo" => $this->nome_completo,
-            "cpf"           => $this->cpf,
-            "nascimento"    => $this->nascimento,
-            "email"         => $this->email,
-            "telefone"      => $this->telefone,
-            "reputacao"     => $this->reputacao,
-            "tipo_usuario"  => $this->tipo_usuario,
-            "foto_usuario"  => $this->foto_usuario,
-            "chave_pix"     => null,
+        $formato = [
+            "id"                => $this->id,
+            "nome_completo"     => $this->nome_completo,
+            "cpf"               => $this->cpf,
+            "nascimento"        => $this->nascimento,
+            "email"             => $this->email,
+            "telefone"          => $this->telefone,
+            "reputacao"         => $this->reputacao,
+            "tipo_usuario"      => $this->tipo_usuario,
+            "foto_usuario"      => $this->foto_usuario,
+            "chave_pix"         => null,
         ];
+        if ($this->token !== "") {
+            return $formato + [
+                "token"             => [
+                    "acesso"            => $this->token,
+                    "refresh"           => $this->token,
+                    "token_tipo"        => "bearer",
+                    "expira_em"         => Auth::factory()->getTTL() * 60,
+                ]
+            ];
+        }
+        return $formato;
     }
 }
