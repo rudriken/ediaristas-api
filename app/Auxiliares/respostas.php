@@ -29,6 +29,13 @@ if (!function_exists("resposta_padrão")) {
 }
 
 if (!function_exists("resposta_token")) {
+
+    /**
+     * Retorna uma resposta padrão para os tokens de autenticação
+     *
+     * @param string $token
+     * @return JsonResponse
+     */
     function resposta_token(string $token): JsonResponse
     {
         return response()->json([
