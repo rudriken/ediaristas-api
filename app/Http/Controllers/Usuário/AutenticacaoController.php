@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Usuário;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Resources\Usuario;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AutenticacaoController extends Controller
@@ -19,7 +20,7 @@ class AutenticacaoController extends Controller
 
     public function eu()
     {
-        return Auth::user();
+        return new Usuario(Auth::user());
     }
 
     public function logout()
