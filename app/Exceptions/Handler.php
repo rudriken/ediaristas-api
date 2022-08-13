@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpFoundation\Response;
 use Throwable;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
 	 * @return Response
 	 */
 	public function render($request, Throwable $e) {
-		if ($request->is("api/*")) {
+		if ($request->is("api/*") || $request->is("autenticacao/*")) {
 			return $this->pegarExceçãoJSON($e);
 		}
 		return parent::render($request, $e);
