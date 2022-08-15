@@ -14,8 +14,9 @@ servers:
     description: Aplicação Laravel Heroku
 tags:
   - name: Api
+  - name: Usuários
   - name: Diaristas
-  - name: Enderecos
+  - name: Endereços
 paths:
   /api:
     get:
@@ -106,7 +107,7 @@ paths:
     get:
       operationId: getEndereco
       tags:
-        - Enderecos
+        - Endereços
       description: Buscar dados de um endereço por CEP
       summary: busca endereço
       parameters:
@@ -131,6 +132,30 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "404":
           description: CEP informado não encontrado
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/usuarios:
+    post:
+      operationId: postUsuario
+      tags:
+        - Usuários
+      description: Cadastra um novo usuário
+      requestBody:
+        content:
+          "multipart/form-data":
+            schema:
+              $ref: "#/components/schemas/CriarUsuarioRequest"
+      responses:
+        "201":
+          description: Usuário cadastrado com sucesso
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/CriarUsuarioResponse"
+        "400":
+          description: Houveram erros de validação
           content:
             "application/json":
               schema:
@@ -169,6 +194,12 @@ components:
           format: date-time
         message:
           type: string
+        erro:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
     EnderecoResponse:
       type: object
       properties:
@@ -207,3 +238,95 @@ components:
         uri:
           type: string
           format: uri
+    CriarUsuarioRequest:
+      type: object
+      properties:
+        nome_completo:
+          type: string
+          minLength: 5
+          maxLength: 255
+        cpf:
+          type: string
+          minLength: 11
+          maxLength: 11
+        nascimento:
+          type: string
+          format: date
+        foto_documento:
+          type: string
+          format: binary
+        telefone:
+          type: string
+          minLength: 11
+          maxLength: 11
+        tipo_usuario:
+          type: integer
+          enum:
+            - 1
+            - 2
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        password:
+          type: string
+          format: password
+        password_confirmation:
+          type: string
+          format: password
+        chave_pix:
+          type: string
+          minLength: 11
+          maxLength: 255
+      required:
+        - nome_completo
+        - cpf
+        - nascimento
+        - foto_documento
+        - telefone
+        - tipo_usuario
+        - email
+        - password
+        - password_confirmation
+    CriarUsuarioResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome_completo:
+          type: string
+        cpf:
+          type: string
+        nascimento:
+          type: string
+          format: date
+        email:
+          type: string
+          format: email
+        telefone:
+          type: string
+        foto_usuario:
+          type: string
+          format: uri
+        tipo_usuario:
+          type: integer
+          enum:
+            - 1
+            - 2
+        chave_pix:
+          type: string
+          minLength: 11
+          maxLength: 255
+        token:
+          $ref: "#/components/schemas/TokenResponse"
+    TokenResponse:
+      type: object
+      properties:
+        acesso:
+          type: string
+        refresh:
+          type: string
+        token_tipo:
+          type: string
+        expira_em:
+          type: integer
