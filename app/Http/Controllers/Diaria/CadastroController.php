@@ -26,7 +26,7 @@ class CadastroController extends Controller
      */
     public function store(Request $request, CriarDiaria $criarDiaria)
     {
-        $criarDiaria->executar();
+        return $criarDiaria->executar($request->all());
     }
 
     /**
