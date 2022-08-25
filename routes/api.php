@@ -11,14 +11,15 @@ use App\Http\Controllers\Usuário\AutenticacaoController;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 
 Route::get("/", IndexController::class);
-/* ( . . . ) */
-Route::get("/eu", [AutenticacaoController::class, "eu"])
-    ->middleware("auth:api")
-    ->name("usuários.show");
 
-Route::post("/diarias", [DiariaCadastroController::class, "store"])
-    ->name("diárias.store")
-    ->middleware("auth:api");
+Route::group(["middleware" => "auth:api"], function () {
+    Route::get("/eu", [AutenticacaoController::class, "eu"])
+        ->name("usuários.show");
+
+    Route::post("/diarias", [DiariaCadastroController::class, "store"])
+        ->name("diárias.store");
+});
+
 
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
     ->name("diaristas.busca_por_cep");
