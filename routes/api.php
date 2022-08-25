@@ -3,22 +3,27 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Servico\ObtemServicos;
-use App\Http\Controllers\Endereço\BuscaCepApiExterna;
+use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
 use App\Http\Controllers\Usuário\CadastroController;
+use App\Http\Controllers\Endereço\BuscaCepApiExterna;
 use App\Http\Controllers\Diarista\ObtemDiaristasPorCEP;
 use App\Http\Controllers\Usuário\AutenticacaoController;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 
 Route::get("/", IndexController::class);
-
+/* ( . . . ) */
 Route::get("/eu", [AutenticacaoController::class, "eu"])
     ->middleware("auth:api")
     ->name("usuários.show");
 
+Route::post("/diarias", [DiariaCadastroController::class, "store"])
+    ->name("diárias.store")
+    ->middleware("auth:api");
+
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
-	->name("diaristas.busca_por_cep");
+    ->name("diaristas.busca_por_cep");
 Route::get("/diaristas/disponibilidade", VerificaDisponibilidade::class)
-	->name("endereços.disponibilidade");
+    ->name("endereços.disponibilidade");
 Route::get("/enderecos", BuscaCepApiExterna::class)
     ->name("endereços.cep");
 Route::get("/servicos", ObtemServicos::class)
