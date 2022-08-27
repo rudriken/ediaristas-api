@@ -24,7 +24,7 @@ class PrecoDiaria implements Rule
      * @param  mixed  $value
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool
     {
         $serviço = Servico::find($this->requisição->servico);
         if (!$serviço) {
@@ -37,7 +37,13 @@ class PrecoDiaria implements Rule
         $total += $this->requisição->quantidade_banheiros   * $serviço->valor_banheiro;
         $total += $this->requisição->quantidade_quintais    * $serviço->valor_quintal;
         $total += $this->requisição->quantidade_outros      * $serviço->valor_outros;
-        return $total === $value;
+        if ($value < $serviço->valor_minimo) {
+            return false;
+        } else if ($value == $serviço->valor_minimo && $total < $serviço->valor_minimo) {
+            return true;
+        } else {
+            return $total === $value;
+        }
     }
 
     /**
