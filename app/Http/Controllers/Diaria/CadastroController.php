@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Diaria;
 
+use App\Http\Resources\Diaria;
 use App\Actions\Diaria\CriarDiaria;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiariaRequest;
@@ -26,7 +27,8 @@ class CadastroController extends Controller
      */
     public function store(DiariaRequest $request, CriarDiaria $criarDiaria)
     {
-        return $criarDiaria->executar($request->all());
+        $diária = $criarDiaria->executar($request->all());
+        return response(new Diaria($diária), 201);
     }
 
     /**
