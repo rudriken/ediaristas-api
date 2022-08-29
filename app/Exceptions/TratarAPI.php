@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 
 trait TratarAPI
@@ -28,6 +29,10 @@ trait TratarAPI
 
         if ($erro instanceof TokenBlacklistedException) {
             return $this->erroDeAutenticação($erro);
+        }
+
+        if ($erro instanceof AuthorizationException) {
+            return $this->erroDeAutorização($erro);
         }
 
         return $this->erroGenérico($erro);
@@ -59,6 +64,11 @@ trait TratarAPI
         AuthenticationException|TokenBlacklistedException $erro
     ): JsonResponse {
         return resposta_padrão(401, "token_não_validado", $erro->getMessage());
+    }
+
+    protected function erroDeAutorização(AuthorizationException $erro): JsonResponse
+    {
+        return resposta_padrão(403, "erro_de_autorização", $erro->getMessage());
     }
 
     /**
