@@ -1,12 +1,40 @@
 {
-    "id": 19,
-    "nome_completo": "Rodrigo Gomes de Mendonça",
-    "cpf": "23533749053",
-    "nascimento": "1981-08-09",
-    "email": "rodigodigo@gmail.com",
-    "telefone": "34984108800",
-    "reputacao": "4.2222",
-    "tipo_usuario": "2",
-    "foto_usuario": null,
-    "chave_pix": null
+    "id": 3170107,
+    "nome": "Uberaba",
+    "microrregiao": {
+        "id": 31022,
+        "nome": "Uberaba",
+        "mesorregiao": {
+            "id": 3105,
+            "nome": "Triângulo Mineiro/Alto Paranaíba",
+            "UF": {
+                "id": 31,
+                "sigla": "MG",
+                "nome": "Minas Gerais",
+                "regiao": {
+                    "id": 3,
+                    "sigla": "SE",
+                    "nome": "Sudeste"
+                }
+            }
+        }
+    },
+    "regiao-imediata": {
+        "id": 310055,
+        "nome": "Uberaba",
+        "regiao-intermediaria": {
+            "id": 3110,
+            "nome": "Uberaba",
+            "UF": {
+                "id": 31,
+                "sigla": "MG",
+                "nome": "Minas Gerais",
+                "regiao": {
+                    "id": 3,
+                    "sigla": "SE",
+                    "nome": "Sudeste"
+                }
+            }
+        }
+    }
 }
