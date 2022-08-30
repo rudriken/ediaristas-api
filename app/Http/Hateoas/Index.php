@@ -2,6 +2,8 @@
 
 namespace App\Http\Hateoas;
 
+use Illuminate\Database\Eloquent\Model;
+
 class Index extends HateoasBase implements HateoasInterface
 {
 
@@ -10,7 +12,7 @@ class Index extends HateoasBase implements HateoasInterface
      *
      * @return array
      */
-    public function links(): array
+    public function links(?Model $inútil = null): array
     {
         $this->adicionaLink("GET", "diaristas_cidade", "diaristas.busca_por_cep");
         $this->adicionaLink(

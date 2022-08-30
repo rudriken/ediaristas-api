@@ -1,40 +1,39 @@
 {
-    "id": 3170107,
-    "nome": "Uberaba",
-    "microrregiao": {
-        "id": 31022,
-        "nome": "Uberaba",
-        "mesorregiao": {
-            "id": 3105,
-            "nome": "Triângulo Mineiro/Alto Paranaíba",
-            "UF": {
-                "id": 31,
-                "sigla": "MG",
-                "nome": "Minas Gerais",
-                "regiao": {
-                    "id": 3,
-                    "sigla": "SE",
-                    "nome": "Sudeste"
-                }
-            }
+    "links": [
+        {
+            "type": "GET",
+            "rel": "diaristas_cidade",
+            "uri": "http://localhost:8000/api/diaristas/localidades"
+        },
+        {
+            "type": "GET",
+            "rel": "verificar_disponibilidade_atendimento",
+            "uri": "http://localhost:8000/api/diaristas/disponibilidade"
+        },
+        {
+            "type": "GET",
+            "rel": "endereco_cep",
+            "uri": "http://localhost:8000/api/enderecos"
+        },
+        {
+            "type": "GET",
+            "rel": "listar_servicos",
+            "uri": "http://localhost:8000/api/servicos"
+        },
+        {
+            "type": "POST",
+            "rel": "cadastrar_usuario",
+            "uri": "http://localhost:8000/api/usuarios"
+        },
+        {
+            "type": "POST",
+            "rel": "login",
+            "uri": "http://localhost:8000/autenticacao/token"
+        },
+        {
+            "type": "GET",
+            "rel": "usuario_logado",
+            "uri": "http://localhost:8000/api/eu"
         }
-    },
-    "regiao-imediata": {
-        "id": 310055,
-        "nome": "Uberaba",
-        "regiao-intermediaria": {
-            "id": 3110,
-            "nome": "Uberaba",
-            "UF": {
-                "id": 31,
-                "sigla": "MG",
-                "nome": "Minas Gerais",
-                "regiao": {
-                    "id": 3,
-                    "sigla": "SE",
-                    "nome": "Sudeste"
-                }
-            }
-        }
-    }
+    ]
 }
