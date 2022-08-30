@@ -20,7 +20,7 @@ class CadastroController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Grava uma nova diária no banco de dados
      *
      * @param  DiariaRequest $request
      * @return \Illuminate\Http\Response

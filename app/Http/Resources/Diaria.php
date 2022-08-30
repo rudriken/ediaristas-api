@@ -11,7 +11,7 @@ class Diaria extends JsonResource
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @return array
      */
     public function toArray($request): array
     {
@@ -31,6 +31,7 @@ class Diaria extends JsonResource
             "complemento"           => $this->complemento,
             "bairro"                => $this->bairro,
             "cidade"                => $this->cidade,
+            "cep"                   => $this->cep,
             "estado"                => $this->estado,
             "codigo_ibge"           => $this->codigo_ibge,
             "quantidade_quartos"    => $this->quantidade_quartos,
@@ -39,6 +40,8 @@ class Diaria extends JsonResource
             "quantidade_banheiros"  => $this->quantidade_banheiros,
             "quantidade_quintais"   => $this->quantidade_quintais,
             "quantidade_outros"     => $this->quantidade_outros,
+            "observacoes"           => $this->observacoes,
+            "motivo_cancelamento"   => $this->motivo_cancelamento,
             "created_at"            => $this->created_at,
             "updated_at"            => $this->updated_at,
             "servico"               => $this->servico_id,

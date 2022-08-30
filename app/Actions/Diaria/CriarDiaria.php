@@ -22,9 +22,9 @@ class CriarDiaria
      * Cria a diária no banco de dados
      *
      * @param array $dados
-     * @return object
+     * @return Diaria
      */
-    public function executar(array $dados): object
+    public function executar(array $dados): Diaria
     {
         Gate::authorize("tipo-cliente");
         $this->consultaCidade->códigoIBGE($dados["codigo_ibge"]);

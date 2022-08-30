@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Hateoas\Usuario as HateoasUsuario;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Hateoas\Usuario as HateoasUsuario;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Usuario extends JsonResource

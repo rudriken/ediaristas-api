@@ -66,6 +66,12 @@ trait TratarAPI
         return resposta_padrão(401, "token_não_validado", $erro->getMessage());
     }
 
+    /**
+     * Retorna uma resposta para erro de autorização
+     *
+     * @param AuthorizationException $erro
+     * @return JsonResponse
+     */
     protected function erroDeAutorização(AuthorizationException $erro): JsonResponse
     {
         return resposta_padrão(403, "erro_de_autorização", $erro->getMessage());
