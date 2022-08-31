@@ -15,6 +15,7 @@ servers:
 tags:
     - name: Eu
     - name: Api
+    - name: Diárias
     - name: Usuários
     - name: Diaristas
     - name: Endereços
@@ -263,6 +264,44 @@ paths:
                                 $ref: "#/components/schemas/ErrorResponse"
             security:
                 - JWT: []
+    /api/diarias:
+        post:
+            operationId: postDiaria
+            tags:
+                - Diárias
+            description: Cadastrar nova diária
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/DiariaRequest"
+            responses:
+                "201":
+                    description: Diária cadastrada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/DiariaResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
 components:
     schemas:
         DiaristaLocalidadePageResponse:
@@ -485,6 +524,164 @@ components:
                     type: array
                     items:
                         $ref: "#/components/schemas/LinkResponse"
+        DiariaRequest:
+            type: object
+            required:
+                - data_atendimento
+                - tempo_atendimento
+                - preco
+                - logradouro
+                - numero
+                - bairro
+                - cidade
+                - estado
+                - codigo_ibge
+                - cep
+                - quantidade_quartos
+                - quantidade_salas
+                - quantidade_cozinhas
+                - quantidade_banheiros
+                - quantidade_quintais
+                - quantidade_outros
+                - servico
+            properties:
+                data_atendimento:
+                    type: string
+                    format: date-time
+                tempo_atendimento:
+                    type: integer
+                preco:
+                    type: number
+                    format: double
+                logradouro:
+                    type: string
+                numero:
+                    type: string
+                complemento:
+                    type: string
+                bairro:
+                    type: string
+                cidade:
+                    type: string
+                estado:
+                    type: string
+                codigo_ibge:
+                    type: string
+                cep:
+                    type: string
+                quantidade_quartos:
+                    type: integer
+                quantidade_salas:
+                    type: integer
+                quantidade_cozinhas:
+                    type: integer
+                quantidade_banheiros:
+                    type: integer
+                quantidade_quintais:
+                    type: integer
+                quantidade_outros:
+                    type: integer
+                observacoes:
+                    type: string
+                servico:
+                    type: integer
+        DiariaResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                status:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                        - 3
+                        - 4
+                        - 5
+                        - 6
+                valor_comissao:
+                    type: number
+                    format: double
+                nome_servico:
+                    type: string
+                cliente:
+                    $ref: "#/components/schemas/UsuarioDiariaRequest"
+                data_atendimento:
+                    type: string
+                    format: date-time
+                tempo_atendimento:
+                    type: integer
+                preco:
+                    type: number
+                    format: double
+                logradouro:
+                    type: string
+                numero:
+                    type: string
+                complemento:
+                    type: string
+                bairro:
+                    type: string
+                cidade:
+                    type: string
+                cep:
+                    type: string
+                estado:
+                    type: string
+                codigo_ibge:
+                    type: string
+                quantidade_quartos:
+                    type: integer
+                quantidade_salas:
+                    type: integer
+                quantidade_cozinhas:
+                    type: integer
+                quantidade_banheiros:
+                    type: integer
+                quantidade_quintais:
+                    type: integer
+                quantidade_outros:
+                    type: integer
+                observacoes:
+                    type: string
+                motivo_cancelamento:
+                    type: string
+                created_at:
+                    type: string
+                    format: date-time
+                updated_at:
+                    type: string
+                    format: date-time
+                servico:
+                    type: integer
+                diarista:
+                    $ref: "#/components/schemas/UsuarioDiariaRequest"
+                links:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/LinkResponse"
+        UsuarioDiariaRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                nome_completo:
+                    type: string
+                nascimento:
+                    type: string
+                    format: date
+                telefone:
+                    type: string
+                reputacao:
+                    type: number
+                    format: double
+                tipo_usuario:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                foto_usuario:
+                    type: string
     securitySchemes:
         JWT:
             type: http
