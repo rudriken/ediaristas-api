@@ -6,6 +6,7 @@ use App\Rules\PrecoDiaria;
 use App\Rules\HoraFinalDiaria;
 use App\Rules\HoraInicioDiaria;
 use App\Rules\PrazoInicioDiaria;
+use App\Rules\QuantidadeMinimaComodos;
 use App\Rules\TempoAtendimentoDiaria;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -50,7 +51,9 @@ class DiariaRequest extends FormRequest
             "estado"                => ["required"],
             "codigo_ibge"           => ["required", "int"],
             "cep"                   => ["required"],
-            "quantidade_quartos"    => ["required", "int"],
+            "quantidade_quartos"    => [
+                "required", "int", new QuantidadeMinimaComodos($this)
+            ],
             "quantidade_salas"      => ["required", "int"],
             "quantidade_cozinhas"   => ["required", "int"],
             "quantidade_banheiros"  => ["required", "int"],
