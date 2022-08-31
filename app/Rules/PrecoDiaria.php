@@ -42,7 +42,7 @@ class PrecoDiaria implements Rule
         } else if ($value == $serviço->valor_minimo && $total < $serviço->valor_minimo) {
             return true;
         } else {
-            return $total === $value;
+            return $total === (float) $value;
         }
     }
 

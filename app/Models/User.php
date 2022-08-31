@@ -49,6 +49,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        "tipo_usuario" => "int",
     ];
 
     /**
@@ -71,66 +72,66 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-	/**
-	 * Define a relação com as cidades atendidas pelo(a) diarista
-	 *
-	 * @return BelongsToMany
-	 */
-	public function cidadesAtendidas(): BelongsToMany
-	{
-		return $this->belongsToMany(Cidade::class, "cidade_diarista");
-		// um diarista atende a "n" cidades
-	}
+    /**
+     * Define a relação com as cidades atendidas pelo(a) diarista
+     *
+     * @return BelongsToMany
+     */
+    public function cidadesAtendidas(): BelongsToMany
+    {
+        return $this->belongsToMany(Cidade::class, "cidade_diarista");
+        // um diarista atende a "n" cidades
+    }
 
-	/**
-	 * Escopo que filtra os(as) diaristas
-	 *
-	 * @param Builder $consulta
-	 * @return Builder
-	 */
-	public function scopeTipoDiarista(Builder $consulta): Builder
-	{
-		return $consulta->where("tipo_usuario", 2);
-	}
+    /**
+     * Escopo que filtra os(as) diaristas
+     *
+     * @param Builder $consulta
+     * @return Builder
+     */
+    public function scopeTipoDiarista(Builder $consulta): Builder
+    {
+        return $consulta->where("tipo_usuario", 2);
+    }
 
-	/**
-	 * Escopo que filtra diaristas por código do IBGE
-	 *
-	 * @param Builder $consulta
-	 * @param integer $cIBGE
-	 * @return Builder
-	 */
-	public function scopeDiaristasAtendeCidade(Builder $consulta, int $cIBGE): Builder
-	{
-		return $consulta->tipoDiarista()
-			->whereHas(
-				"cidadesAtendidas", // aqui entramos na tabela "cidades"
-				function($pesquisaPeloCódigoIBGE) use ($cIBGE) {
-					$pesquisaPeloCódigoIBGE->where("codigo_ibge", $cIBGE);
-					// aqui já estamos dentro da tabela "cidades"
-				}
-			);
-	}
+    /**
+     * Escopo que filtra diaristas por código do IBGE
+     *
+     * @param Builder $consulta
+     * @param integer $cIBGE
+     * @return Builder
+     */
+    public function scopeDiaristasAtendeCidade(Builder $consulta, int $cIBGE): Builder
+    {
+        return $consulta->tipoDiarista()
+            ->whereHas(
+                "cidadesAtendidas", // aqui entramos na tabela "cidades"
+                function ($pesquisaPeloCódigoIBGE) use ($cIBGE) {
+                    $pesquisaPeloCódigoIBGE->where("codigo_ibge", $cIBGE);
+                    // aqui já estamos dentro da tabela "cidades"
+                }
+            );
+    }
 
-	/**
-	 * Busca 6 diaristas por código do IBGE
-	 *
-	 * @param integer $códigoIBGE
-	 * @return Collection
-	 */
-	static public function diaristasDisponívelCidade(int $códigoIBGE): Collection
-	{
-		return User::diaristasAtendeCidade($códigoIBGE)->limit(6)->get();
-	}
+    /**
+     * Busca 6 diaristas por código do IBGE
+     *
+     * @param integer $códigoIBGE
+     * @return Collection
+     */
+    static public function diaristasDisponívelCidade(int $códigoIBGE): Collection
+    {
+        return User::diaristasAtendeCidade($códigoIBGE)->limit(6)->get();
+    }
 
-	/**
-	 * Retorna a quantidade de diaristas por código do IBGE
-	 *
-	 * @param integer $códigoIBGE
-	 * @return integer
-	 */
-	static public function diaristasDisponívelCidadeQuantidade(int $códigoIBGE): int
-	{
-		return User::diaristasAtendeCidade($códigoIBGE)->count();
-	}
+    /**
+     * Retorna a quantidade de diaristas por código do IBGE
+     *
+     * @param integer $códigoIBGE
+     * @return integer
+     */
+    static public function diaristasDisponívelCidadeQuantidade(int $códigoIBGE): int
+    {
+        return User::diaristasAtendeCidade($códigoIBGE)->count();
+    }
 }
