@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Diaria;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -28,6 +29,12 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define("tipo-cliente", function (User $usuárioLogado) {
             return $usuárioLogado->tipo_usuario == 1;
+        });
+        Gate::define("dono-diaria", function (User $usuarioLogado, Diaria $diaria) {
+            if ($usuarioLogado->tipo_usuario == 1) {
+                return $diaria->cliente_id == $usuarioLogado->id;
+            }
+            return true;
         });
     }
 }
