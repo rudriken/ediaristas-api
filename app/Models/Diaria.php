@@ -34,4 +34,15 @@ class Diaria extends Model
     {
         return $this->belongsTo(User::class, "cliente_id");
     }
+
+    /**
+     * Define o status da diária como pago
+     *
+     * @return boolean
+     */
+    public function pagar(): bool
+    {
+        $this->status = 2;
+        return $this->save();
+    }
 }

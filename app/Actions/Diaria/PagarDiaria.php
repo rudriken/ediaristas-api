@@ -2,9 +2,11 @@
 
 namespace App\Actions\Diaria;
 
+use App\Models\Diaria;
+
 class PagarDiaria {
-    public function executar()
+    public function executar(Diaria $diaria)
     {
-        dd("cheguei na Action PagarDiaria");
+        $diaria->pagar();
     }
 }
