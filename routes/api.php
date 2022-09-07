@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\Diaria\PagaDiaria;
 use App\Http\Controllers\Servico\ObtemServicos;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
 use App\Http\Controllers\Usuário\CadastroController;
@@ -15,9 +16,9 @@ Route::get("/", IndexController::class);
 Route::group(["middleware" => "auth:api"], function () {
     Route::get("/eu", [AutenticacaoController::class, "eu"])
         ->name("usuários.show");
-
     Route::post("/diarias", [DiariaCadastroController::class, "store"])
         ->name("diárias.store");
+    Route::post("/diarias/{diaria}/pagamentos", PagaDiaria::class)->name("diarias.pagar");
 });
 
 
