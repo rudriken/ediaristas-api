@@ -3,6 +3,7 @@
 namespace App\Actions\Diaria;
 
 use App\Models\Diaria;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 
 class PagarDiaria
@@ -10,6 +11,7 @@ class PagarDiaria
     public function executar(Diaria $diaria)
     {
         $this->validaStatusDiaria($diaria);
+        Gate::authorize("tipo-cliente");
         // integração com o gateway de pagamento
         $diaria->pagar();
     }
