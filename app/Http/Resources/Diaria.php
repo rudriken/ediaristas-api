@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Hateoas\Diaria as HateoasDiaria;
 use Carbon\Carbon;
+use App\Http\Hateoas\Diaria as HateoasDiaria;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Diaria extends JsonResource

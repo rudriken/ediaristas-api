@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Diaria;
 
 use App\Models\Diaria;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Actions\Diaria\PagarDiaria;
 use App\Http\Controllers\Controller;
 
@@ -14,12 +15,13 @@ class PagaDiaria extends Controller
     }
 
     /**
-     * Handle the incoming request.
+     * Paga uma diária
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Diaria $diaria
+     * @return JsonResponse
      */
-    public function __invoke(Request $request, Diaria $diaria)
+    public function __invoke(Request $request, Diaria $diaria): JsonResponse
     {
         $request->validate(["card_hash" => "required"]);
         $this->pagarDiaria->executar($diaria, $request->card_hash);
