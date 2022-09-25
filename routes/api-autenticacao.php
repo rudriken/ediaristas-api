@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Usuário\AutenticacaoController;
+use App\Http\Controllers\Usuario\AutenticacaoController;
 
 Route::post("/token", [AutenticacaoController::class, "login"])
-    ->name("autenticação.login");
+    ->name("autenticacao.login");
 Route::post("/logout", [AutenticacaoController::class, "logout"])
     ->middleware("auth:api")
-    ->name("autenticação.logout");
+    ->name("autenticacao.logout");
 Route::post("/token/atualizar", [AutenticacaoController::class, "atualizar"])
-    ->name("autenticação.atualizar");
+    ->name("autenticacao.atualizar");

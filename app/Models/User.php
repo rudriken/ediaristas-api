@@ -106,8 +106,8 @@ class User extends Authenticatable implements JWTSubject
         return $consulta->tipoDiarista()
             ->whereHas(
                 "cidadesAtendidas", // aqui entramos na tabela "cidades"
-                function ($pesquisaPeloCódigoIBGE) use ($cIBGE) {
-                    $pesquisaPeloCódigoIBGE->where("codigo_ibge", $cIBGE);
+                function ($pesquisaPeloCodigoIBGE) use ($cIBGE) {
+                    $pesquisaPeloCodigoIBGE->where("codigo_ibge", $cIBGE);
                     // aqui já estamos dentro da tabela "cidades"
                 }
             );
@@ -116,22 +116,22 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Busca 6 diaristas por código do IBGE
      *
-     * @param integer $códigoIBGE
+     * @param integer $codigoIBGE
      * @return Collection
      */
-    static public function diaristasDisponívelCidade(int $códigoIBGE): Collection
+    static public function diaristasDisponivelCidade(int $codigoIBGE): Collection
     {
-        return User::diaristasAtendeCidade($códigoIBGE)->limit(6)->get();
+        return User::diaristasAtendeCidade($codigoIBGE)->limit(6)->get();
     }
 
     /**
      * Retorna a quantidade de diaristas por código do IBGE
      *
-     * @param integer $códigoIBGE
+     * @param integer $codigoIBGE
      * @return integer
      */
-    static public function diaristasDisponívelCidadeQuantidade(int $códigoIBGE): int
+    static public function diaristasDisponivelCidadeQuantidade(int $codigoIBGE): int
     {
-        return User::diaristasAtendeCidade($códigoIBGE)->count();
+        return User::diaristasAtendeCidade($codigoIBGE)->count();
     }
 }

@@ -13,7 +13,7 @@ class PrecoDiaria implements Rule
      *
      * @return void
      */
-    public function __construct(private Request $requisição)
+    public function __construct(private Request $requisicao)
     {
     }
 
@@ -26,20 +26,20 @@ class PrecoDiaria implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        $serviço = Servico::find($this->requisição->servico);
-        if (!$serviço) {
+        $servico = Servico::find($this->requisicao->servico);
+        if (!$servico) {
             return false;
         }
         $total = 0;
-        $total += $this->requisição->quantidade_quartos     * $serviço->valor_quarto;
-        $total += $this->requisição->quantidade_salas       * $serviço->valor_sala;
-        $total += $this->requisição->quantidade_cozinhas    * $serviço->valor_cozinha;
-        $total += $this->requisição->quantidade_banheiros   * $serviço->valor_banheiro;
-        $total += $this->requisição->quantidade_quintais    * $serviço->valor_quintal;
-        $total += $this->requisição->quantidade_outros      * $serviço->valor_outros;
-        if ($value < $serviço->valor_minimo) {
+        $total += $this->requisicao->quantidade_quartos     * $servico->valor_quarto;
+        $total += $this->requisicao->quantidade_salas       * $servico->valor_sala;
+        $total += $this->requisicao->quantidade_cozinhas    * $servico->valor_cozinha;
+        $total += $this->requisicao->quantidade_banheiros   * $servico->valor_banheiro;
+        $total += $this->requisicao->quantidade_quintais    * $servico->valor_quintal;
+        $total += $this->requisicao->quantidade_outros      * $servico->valor_outros;
+        if ($value < $servico->valor_minimo) {
             return false;
-        } else if ($value == $serviço->valor_minimo && $total < $serviço->valor_minimo) {
+        } else if ($value == $servico->valor_minimo && $total < $servico->valor_minimo) {
             return true;
         } else {
             return $total === (float) $value;

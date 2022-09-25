@@ -10,9 +10,9 @@ class Usuario extends JsonResource
 {
     private string $token;
 
-    public function __construct($recurso, $símbolo = "")
+    public function __construct($recurso, $simbolo = "")
     {
-        $this->token = $símbolo;
+        $this->token = $simbolo;
         parent::__construct($recurso); /* passando para a classe-mãe os dados do usuário */
     }
 

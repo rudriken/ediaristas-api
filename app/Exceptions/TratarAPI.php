@@ -17,25 +17,25 @@ trait TratarAPI
      * @param \Throwable $erro
      * @return JsonResponse
      */
-    protected function pegarExceçãoJSON(\Throwable $erro): JsonResponse
+    protected function pegarExcecaoJSON(\Throwable $erro): JsonResponse
     {
         if ($erro instanceof ValidationException) {
-            return $this->erroDeValidação($erro);
+            return $this->erroDeValidacao($erro);
         }
 
         if ($erro instanceof AuthenticationException) {
-            return $this->erroDeAutenticação($erro);
+            return $this->erroDeAutenticacao($erro);
         }
 
         if ($erro instanceof TokenBlacklistedException) {
-            return $this->erroDeAutenticação($erro);
+            return $this->erroDeAutenticacao($erro);
         }
 
         if ($erro instanceof AuthorizationException) {
-            return $this->erroDeAutorização($erro);
+            return $this->erroDeAutorizacao($erro);
         }
 
-        return $this->erroGenérico($erro);
+        return $this->erroGenerico($erro);
     }
 
     /**
@@ -44,11 +44,11 @@ trait TratarAPI
      * @param ValidationException $erro
      * @return JsonResponse
      */
-    protected function erroDeValidação(ValidationException $erro): JsonResponse
+    protected function erroDeValidacao(ValidationException $erro): JsonResponse
     {
-        return resposta_padrão(
+        return resposta_padrao(
             400,
-            "validação_erro",
+            "validacao_erro",
             "Erro de validação dos dados enviados",
             $erro->errors()
         );
@@ -60,10 +60,10 @@ trait TratarAPI
      * @param AuthenticationException $erro
      * @return JsonResponse
      */
-    protected function erroDeAutenticação(
+    protected function erroDeAutenticacao(
         AuthenticationException|TokenBlacklistedException $erro
     ): JsonResponse {
-        return resposta_padrão(401, "token_não_validado", $erro->getMessage());
+        return resposta_padrao(401, "token_nao_validado", $erro->getMessage());
     }
 
     /**
@@ -72,9 +72,9 @@ trait TratarAPI
      * @param AuthorizationException $erro
      * @return JsonResponse
      */
-    protected function erroDeAutorização(AuthorizationException $erro): JsonResponse
+    protected function erroDeAutorizacao(AuthorizationException $erro): JsonResponse
     {
-        return resposta_padrão(403, "erro_de_autorização", $erro->getMessage());
+        return resposta_padrao(403, "erro_de_autorizacao", $erro->getMessage());
     }
 
     /**
@@ -83,8 +83,8 @@ trait TratarAPI
      * @param \Throwable $erro
      * @return JsonResponse
      */
-    protected function erroGenérico(\Throwable $erro): JsonResponse
+    protected function erroGenerico(\Throwable $erro): JsonResponse
     {
-        return resposta_padrão(500, "interno_erro", "erro interno do servidor");
+        return resposta_padrao(500, "interno_erro", "erro interno do servidor");
     }
 }

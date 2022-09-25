@@ -10,8 +10,8 @@ use App\Http\Resources\DiaristaPublicoCollection;
 class ObtemDiaristasPorCEP extends Controller {
 	private ObterDiaristasPorCEP $obterDiaristasPorCEP;
 
-	public function __construct(ObterDiaristasPorCEP $ação) {
-		$this->obterDiaristasPorCEP = $ação;
+	public function __construct(ObterDiaristasPorCEP $acao) {
+		$this->obterDiaristasPorCEP = $acao;
 	}
 
 	/**
@@ -21,7 +21,7 @@ class ObtemDiaristasPorCEP extends Controller {
 	 * @return DiaristaPublicoCollection
 	 */
     public function __invoke(CepRequest $request): DiaristaPublicoCollection {
-		[$diaristas, $quantidadeDiaristas, $localidade] = 
+		[$diaristas, $quantidadeDiaristas, $localidade] =
 			$this->obterDiaristasPorCEP->executar($request->cep);
 		return new DiaristaPublicoCollection(
 			$diaristas, $quantidadeDiaristas, $localidade

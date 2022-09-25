@@ -10,8 +10,8 @@ use App\Actions\Diarista\ObterDiaristasPorCEP;
 class VerificaDisponibilidade extends Controller {
 	private ObterDiaristasPorCEP $obterDiaristasPorCEP;
 
-	public function __construct(ObterDiaristasPorCEP $ação) {
-		$this->obterDiaristasPorCEP = $ação;
+	public function __construct(ObterDiaristasPorCEP $acao) {
+		$this->obterDiaristasPorCEP = $acao;
 	}
 
 	/**
@@ -22,10 +22,10 @@ class VerificaDisponibilidade extends Controller {
 	 */
     public function __invoke(CepRequest $request): JsonResponse {
 		[$diaristas] = $this->obterDiaristasPorCEP->executar($request->cep);
-		return resposta_padrão(
-			200, 
-			"sucesso", 
-			"Disponiblidade verificada com sucesso", 
+		return resposta_padrao(
+			200,
+			"sucesso",
+			"Disponiblidade verificada com sucesso",
 			["disponibilidade" => $diaristas->isNotEmpty()]
 		);
     }

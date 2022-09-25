@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler
 	 */
 	public function render($request, Throwable $e) {
 		if ($request->is("api/*") || $request->is("autenticacao/*")) {
-			return $this->pegarExceçãoJSON($e);
+			return $this->pegarExcecaoJSON($e);
 		}
 		return parent::render($request, $e);
 	}

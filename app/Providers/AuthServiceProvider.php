@@ -27,8 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define("tipo-cliente", function (User $usuárioLogado) {
-            return $usuárioLogado->tipo_usuario == 1;
+        Gate::define("tipo-cliente", function (User $usuarioLogado) {
+            return $usuarioLogado->tipo_usuario == 1;
         });
         Gate::define("dono-diaria", function (User $usuarioLogado, Diaria $diaria) {
             if ($usuarioLogado->tipo_usuario == 1) {

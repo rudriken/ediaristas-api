@@ -14,8 +14,8 @@ class DiaristaPublico extends JsonResource {
     public function toArray($request): array {
         return [
 			"nome" => $this->nome_completo,
-			"reputação" => $this->reputacao,
-			"foto_do_usuário" => $this->foto_usuario,
+			"reputacao" => $this->reputacao,
+			"foto_do_usuario" => $this->foto_usuario,
 			"cidade" => "Uberlândia"
 		];
     }

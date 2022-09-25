@@ -17,9 +17,9 @@ class PrazoInicioDiaria implements Rule
      */
     public function passes($attribute, $value)
     {
-        $dataHoraInícioDiária = Carbon::parse($value);
-        $dataInícioMínima = Carbon::now()->addHour(48);
-        return $dataHoraInícioDiária > $dataInícioMínima;
+        $dataHoraInicioDiaria = Carbon::parse($value);
+        $dataInicioMinima = Carbon::now()->addHour(48);
+        return $dataHoraInicioDiaria > $dataInicioMinima;
     }
 
     /**

@@ -8,8 +8,8 @@ use Illuminate\Http\JsonResponse;
 class IndexController extends Controller {
 	private Index $indexHateoas;
 
-	public function __construct(Index $parâmetro) {
-		$this->indexHateoas = $parâmetro;
+	public function __construct(Index $parametro) {
+		$this->indexHateoas = $parametro;
 	}
 
     public function __invoke(): JsonResponse {

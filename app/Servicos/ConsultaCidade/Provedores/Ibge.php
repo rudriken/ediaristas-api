@@ -7,11 +7,11 @@ use Illuminate\Validation\ValidationException;
 
 class Ibge
 {
-    public function códigoIBGE(int $código)
+    public function codigoIBGE(int $codigo)
     {
         $url = sprintf(
             "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/%s",
-            $código
+            $codigo
         );
         $resposta = Http::get($url)->throw();
         $dados = $resposta->json();

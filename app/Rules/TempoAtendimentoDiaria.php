@@ -13,7 +13,7 @@ class TempoAtendimentoDiaria implements Rule
      *
      * @return void
      */
-    public function __construct(private Request $requisição)
+    public function __construct(private Request $requisicao)
     {
     }
 
@@ -26,17 +26,17 @@ class TempoAtendimentoDiaria implements Rule
      */
     public function passes($attribute, $value)
     {
-        $serviço = Servico::find($this->requisição->servico);
-        if (!$serviço) {
+        $servico = Servico::find($this->requisicao->servico);
+        if (!$servico) {
             return false;
         }
         $total = 0;
-        $total += $this->requisição->quantidade_quartos     * $serviço->horas_quarto;
-        $total += $this->requisição->quantidade_salas       * $serviço->horas_sala;
-        $total += $this->requisição->quantidade_cozinhas    * $serviço->horas_cozinha;
-        $total += $this->requisição->quantidade_banheiros   * $serviço->horas_banheiro;
-        $total += $this->requisição->quantidade_quintais    * $serviço->horas_quintal;
-        $total += $this->requisição->quantidade_outros      * $serviço->horas_outros;
+        $total += $this->requisicao->quantidade_quartos     * $servico->horas_quarto;
+        $total += $this->requisicao->quantidade_salas       * $servico->horas_sala;
+        $total += $this->requisicao->quantidade_cozinhas    * $servico->horas_cozinha;
+        $total += $this->requisicao->quantidade_banheiros   * $servico->horas_banheiro;
+        $total += $this->requisicao->quantidade_quintais    * $servico->horas_quintal;
+        $total += $this->requisicao->quantidade_outros      * $servico->horas_outros;
         return $total === $value;
     }
 

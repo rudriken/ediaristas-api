@@ -70,7 +70,7 @@
                                                                             color: #ffffff
                                                                         "
                                                                     >
-                                                                        @yield('título')
+                                                                        @yield('titulo')
                                                                     </h1>
                                                                 </td>
                                                             </tr>
@@ -117,7 +117,7 @@
                                                                                             text-align: left
                                                                                         "
                                                                                     >
-                                                                                        @yield('conteúdo')
+                                                                                        @yield('conteudo')
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>

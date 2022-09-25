@@ -12,7 +12,7 @@ class UsuarioCadastrado extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private User $novoUsuário;
+    private User $novoUsuario;
 
     /**
      * Create a new message instance.
@@ -21,7 +21,7 @@ class UsuarioCadastrado extends Mailable
      */
     public function __construct(User $observador)
     {
-        $this->novoUsuário = $observador;
+        $this->novoUsuario = $observador;
     }
 
     /**
@@ -36,7 +36,7 @@ class UsuarioCadastrado extends Mailable
                 ->subject("Bem Vindo(a) ao E-diaristas")
                 ->from("nao-responda@e-diaristas.com.br", "E-diaristas")
                 ->view('email.mensagens.cadastro', [
-                    "usuário" => $this->novoUsuário,
+                    "usuario" => $this->novoUsuario,
                 ])
         );
     }

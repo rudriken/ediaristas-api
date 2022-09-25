@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class HoraFinalDiaria implements Rule
 {
-    private Request $requisição;
+    private Request $requisicao;
 
     /**
      * Create a new rule instance.
@@ -17,7 +17,7 @@ class HoraFinalDiaria implements Rule
      */
     public function __construct(Request $request)
     {
-        $this->requisição = $request;
+        $this->requisicao = $request;
     }
 
     /**
@@ -29,10 +29,10 @@ class HoraFinalDiaria implements Rule
      */
     public function passes($attribute, $value)
     {
-        $inícioAtendimento = CarbonImmutable::parse($this->requisição->data_atendimento);
-        $finalAtendimento = $inícioAtendimento->addHours($value);
-        $limiteHorárioParaAtendimento = $inícioAtendimento->setHour(22)->setMinute(0);
-        return $finalAtendimento <= $limiteHorárioParaAtendimento;
+        $inicioAtendimento = CarbonImmutable::parse($this->requisicao->data_atendimento);
+        $finalAtendimento = $inicioAtendimento->addHours($value);
+        $limiteHorarioParaAtendimento = $inicioAtendimento->setHour(22)->setMinute(0);
+        return $finalAtendimento <= $limiteHorarioParaAtendimento;
     }
 
     /**

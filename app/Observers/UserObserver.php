@@ -11,26 +11,26 @@ class UserObserver
     /**
      * Define a reputação antes de criar o usuário
      *
-     * @param User $novoUsuário
+     * @param User $novoUsuario
      * @return void
      */
-    public function creating(User $novoUsuário): void
+    public function creating(User $novoUsuario): void
     {
         if (User::count() === 0) {
-            $novoUsuário->reputacao = 5;
+            $novoUsuario->reputacao = 5;
             return;
         }
-        $novoUsuário->reputacao = User::avg("reputacao");
+        $novoUsuario->reputacao = User::avg("reputacao");
     }
 
     /**
      * Envio do e-mail de boas-vindas para o novo usuário
      *
-     * @param User $novoUsuário
+     * @param User $novoUsuario
      * @return void
      */
-    public function created(User $novoUsuário): void
+    public function created(User $novoUsuario): void
     {
-        Mail::to($novoUsuário->email)->send(new UsuarioCadastrado($novoUsuário));
+        Mail::to($novoUsuario->email)->send(new UsuarioCadastrado($novoUsuario));
     }
 }

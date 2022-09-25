@@ -1,12 +1,12 @@
 @extends('email.layout')
 
-@section('título', "Seja bem vindo(a) ao E-diaristas")
+@section('titulo', "Seja bem vindo(a) ao E-diaristas")
 
-@section('conteúdo')
+@section('conteudo')
     <p style="margin: 0 0 16px;">
-        Olá {{ $usuário->nome_completo }}, seja bem-vindo(a) ao E-diaristas!
+        Olá {{ $usuario->nome_completo }}, seja bem-vindo(a) ao E-diaristas!
     </p>
-    @if ($usuário->tipo_usuario == 1)
+    @if ($usuario->tipo_usuario == 1)
         <p style="margin: 0 0 16px;">
             Seja bem-vindo como cliente do E-diarsitas.
         </p>

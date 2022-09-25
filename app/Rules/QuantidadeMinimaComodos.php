@@ -12,7 +12,7 @@ class QuantidadeMinimaComodos implements Rule
      *
      * @return void
      */
-    public function __construct(private Request $requisição) {}
+    public function __construct(private Request $requisicao) {}
 
     /**
      * Determine if the validation rule passes.
@@ -23,14 +23,14 @@ class QuantidadeMinimaComodos implements Rule
      */
     public function passes($attribute, $value)
     {
-        $totalCômodos = 0;
-        $totalCômodos += $this->requisição->quantidade_quartos;
-        $totalCômodos += $this->requisição->quantidade_salas;
-        $totalCômodos += $this->requisição->quantidade_cozinhas;
-        $totalCômodos += $this->requisição->quantidade_banheiros;
-        $totalCômodos += $this->requisição->quantidade_quintais;
-        $totalCômodos += $this->requisição->quantidade_outros;
-        return $totalCômodos > 0;
+        $totalComodos = 0;
+        $totalComodos += $this->requisicao->quantidade_quartos;
+        $totalComodos += $this->requisicao->quantidade_salas;
+        $totalComodos += $this->requisicao->quantidade_cozinhas;
+        $totalComodos += $this->requisicao->quantidade_banheiros;
+        $totalComodos += $this->requisicao->quantidade_quintais;
+        $totalComodos += $this->requisicao->quantidade_outros;
+        return $totalComodos > 0;
     }
 
     /**

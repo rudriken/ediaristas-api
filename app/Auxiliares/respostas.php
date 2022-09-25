@@ -3,26 +3,26 @@
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
-if (!function_exists("resposta_padrão")) {
+if (!function_exists("resposta_padrao")) {
 
     /**
      * Retorna uma resposta padronizada para a API
      *
      * @param int $HTTP
-     * @param string $código
+     * @param string $codigo
      * @param string $mensagem
      * @param array $adicionais
      * @return JsonResponse
      */
-    function resposta_padrão(
+    function resposta_padrao(
         int $HTTP,
-        string $código,
+        string $codigo,
         string $mensagem,
         array $adicionais = []
     ): JsonResponse {
         return response()->json([
             "HTTP" => $HTTP,
-            "código" => $código,
+            "codigo" => $codigo,
             "mensagem" => $mensagem
         ] + $adicionais, $HTTP);
     }

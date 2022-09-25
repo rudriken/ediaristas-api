@@ -25,6 +25,6 @@ class PagaDiaria extends Controller
     {
         $request->validate(["card_hash" => "required"]);
         $this->pagarDiaria->executar($diaria, $request->card_hash);
-        return resposta_padrão(200, "sucesso", "Diária paga com sucesso");
+        return resposta_padrao(200, "sucesso", "Diária paga com sucesso");
     }
 }

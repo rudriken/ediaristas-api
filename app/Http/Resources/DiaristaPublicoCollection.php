@@ -24,7 +24,7 @@ class DiaristaPublicoCollection extends ResourceCollection {
 	 *
 	 * @var integer
 	 */
-	private int $quantidadeDiaristasNãoVisíveis;
+	private int $quantidadeDiaristasNaoVisiveis;
 
 	/**
 	 * Guarda a cidade do CEP informado pelo usuário
@@ -36,10 +36,10 @@ class DiaristaPublicoCollection extends ResourceCollection {
 	public function __construct($recurso, int $quantidadeDiaristas, string $cidade) {
 		parent::__construct($recurso);
 		$this->quantidadeDiaristas = $quantidadeDiaristas;
-		$this->quantidadeDiaristasNãoVisíveis = $this->quantidadeDiaristas - 6;
+		$this->quantidadeDiaristasNaoVisiveis = $this->quantidadeDiaristas - 6;
 		$this->cidade = $cidade;
 	}
-	
+
     /**
      * Transforme a coleção de recursos em um array.
      *
@@ -49,9 +49,9 @@ class DiaristaPublicoCollection extends ResourceCollection {
     public function toArray($request): array {
         return [
 			"diaristas" => DiaristaPublico::collection($this->collection),
-			"quantidade_diaristas_restante" => 
-				$this->quantidadeDiaristasNãoVisíveis > 0 ? 
-				$this->quantidadeDiaristasNãoVisíveis : 0,
+			"quantidade_diaristas_restante" =>
+				$this->quantidadeDiaristasNaoVisiveis > 0 ?
+				$this->quantidadeDiaristasNaoVisiveis : 0,
 			"cidade_do_cep" => $this->cidade
 		];
     }
