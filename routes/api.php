@@ -16,12 +16,14 @@ Route::get("/", IndexController::class);
 Route::group(["middleware" => "auth:api"], function () {
     Route::get("/eu", [AutenticacaoController::class, "eu"])
         ->name("usuarios.show");
+    Route::get("/diarias", [DiariaCadastroController::class, "index"])
+        ->name("diarias.index");
     Route::post("/diarias", [DiariaCadastroController::class, "store"])
         ->name("diarias.store");
     Route::post("/diarias/{diaria}/pagamentos", PagaDiaria::class)->name("diarias.pagar");
 });
 
-
+/* ( . . . ) */
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
     ->name("diaristas.busca_por_cep");
 Route::get("/diaristas/disponibilidade", VerificaDisponibilidade::class)

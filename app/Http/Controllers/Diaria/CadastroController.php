@@ -6,6 +6,7 @@ use App\Http\Resources\Diaria;
 use App\Actions\Diaria\CriarDiaria;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiariaRequest;
+use App\Models\Diaria as ModelDiaria;
 
 class CadastroController extends Controller
 {
@@ -16,7 +17,8 @@ class CadastroController extends Controller
      */
     public function index()
     {
-        //
+        $diarias = ModelDiaria::get();
+        return $diarias;
     }
 
     /**
