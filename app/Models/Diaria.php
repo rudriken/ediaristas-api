@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,5 +45,19 @@ class Diaria extends Model
     {
         $this->status = 2;
         return $this->save();
+    }
+
+    /**
+     * Retorna as diárias do usuário
+     *
+     * @param User $usuario
+     * @return Collection
+     */
+    static function todasDoUsuario(User $usuario): Collection
+    {
+        if ($usuario->tipo_usuario === 1) {
+            return self::where("cliente_id", $usuario->id)->get();
+        }
+        return self::where("diarista_id", $usuario->id)->get();
     }
 }

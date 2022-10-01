@@ -7,6 +7,7 @@ use App\Actions\Diaria\CriarDiaria;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiariaRequest;
 use App\Models\Diaria as ModelDiaria;
+use Illuminate\Support\Facades\Auth;
 
 class CadastroController extends Controller
 {
@@ -17,7 +18,8 @@ class CadastroController extends Controller
      */
     public function index()
     {
-        $diarias = ModelDiaria::get();
+        $usuario = Auth::user();
+        $diarias = ModelDiaria::todasDoUsuario($usuario);
         return $diarias;
     }
 
