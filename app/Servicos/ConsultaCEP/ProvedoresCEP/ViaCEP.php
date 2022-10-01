@@ -22,16 +22,16 @@ class ViaCEP implements InterfaceConsultaCEP {
 		if (isset($dados["erro"]) && $dados["erro"] === "true") {
 			return false;
 		}
-		return $this->populaEndereçoResposta($dados);
+		return $this->populaEnderecoResposta($dados);
 	}
 
 	/**
 	 * Formata a saída para endereço resposta
-	 * 
+	 *
 	 * @param array $dados
 	 * @return EnderecoResposta
 	 */
-	private function populaEndereçoResposta(array $dados): EnderecoResposta {
+	private function populaEnderecoResposta(array $dados): EnderecoResposta {
 		return new EnderecoResposta(
 			logradouro: $dados["logradouro"],
 			complemento: $dados["complemento"],

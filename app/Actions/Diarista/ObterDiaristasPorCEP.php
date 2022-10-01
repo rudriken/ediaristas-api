@@ -26,8 +26,8 @@ class ObterDiaristasPorCEP {
 				["cep" => "CEP inválido ou não encontrado"]
 			);
 		}
-		$diaristas = User::diaristasDisponívelCidade($dados->ibge);
-        $quantidadeDiaristas = User::diaristasDisponívelCidadeQuantidade($dados->ibge);
+		$diaristas = User::diaristasDisponivelCidade($dados->ibge);
+        $quantidadeDiaristas = User::diaristasDisponivelCidadeQuantidade($dados->ibge);
 		return [
 			$diaristas, $quantidadeDiaristas, $dados->localidade
 		];

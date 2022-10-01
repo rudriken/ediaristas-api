@@ -16,7 +16,7 @@ class IbgeDiaristasDisponiveis implements Rule
      */
     public function passes($attribute, $value)
     {
-        $diaristas = User::diaristasDisponívelCidade($value);
+        $diaristas = User::diaristasDisponivelCidade($value);
         return $diaristas->isNotEmpty();
     }
 

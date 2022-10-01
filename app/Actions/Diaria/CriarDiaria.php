@@ -27,7 +27,7 @@ class CriarDiaria
     public function executar(array $dados): Diaria
     {
         Gate::authorize("tipo-cliente");
-        $this->consultaCidade->códigoIBGE($dados["codigo_ibge"]);
+        $this->consultaCidade->codigoIBGE($dados["codigo_ibge"]);
         $dados["status"] = 1;
         $dados["servico_id"] = $dados["servico"];
         $dados["valor_comissao"] = $this->calcularComissao($dados);
