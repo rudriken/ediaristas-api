@@ -55,9 +55,13 @@ class Diaria extends Model
      */
     static function todasDoUsuario(User $usuario): Collection
     {
-        if ($usuario->tipo_usuario === 1) {
-            return self::where("cliente_id", $usuario->id)->get();
-        }
-        return self::where("diarista_id", $usuario->id)->get();
+        return self::
+            when($usuario->tipo_usuario === 1, function ($consulta) use ($usuario) {
+                $consulta->where("cliente_id", $usuario->id);
+            })->
+            when($usuario->tipo_usuario === 2, function ($consulta) use ($usuario) {
+                $consulta->where("diarista_id", $usuario->id);
+            })->
+            get();
     }
 }
