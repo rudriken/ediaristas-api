@@ -39,11 +39,11 @@ class CadastroController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ModelDiaria $diaria
+     * @return Diaria
      */
-    public function show($id)
+    public function show(ModelDiaria $diaria): Diaria
     {
-        //
+        return new Diaria($diaria);
     }
 }
