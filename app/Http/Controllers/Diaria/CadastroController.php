@@ -6,6 +6,7 @@ use App\Http\Resources\Diaria;
 use App\Actions\Diaria\CriarDiaria;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiariaRequest;
+use App\Http\Resources\DiariaCollection;
 use App\Models\Diaria as ModelDiaria;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,7 @@ class CadastroController extends Controller
     {
         $usuario = Auth::user();
         $diarias = ModelDiaria::todasDoUsuario($usuario);
-        return $diarias;
+        return new DiariaCollection($diarias);
     }
 
     /**
