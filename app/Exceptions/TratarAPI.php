@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 trait TratarAPI
 {
@@ -33,6 +34,10 @@ trait TratarAPI
 
         if ($erro instanceof AuthorizationException) {
             return $this->erroDeAutorizacao($erro);
+        }
+
+        if ($erro instanceof ModelNotFoundException) {
+            return $this->erroDeNaoEncontrado();
         }
 
         return $this->erroGenerico($erro);
@@ -75,6 +80,16 @@ trait TratarAPI
     protected function erroDeAutorizacao(AuthorizationException $erro): JsonResponse
     {
         return resposta_padrao(403, "erro_de_autorizacao", $erro->getMessage());
+    }
+
+    /**
+     * Retorna uma resposta para erro de Model não encontrado
+     *
+     * @return JsonResponse
+     */
+    protected function erroDeNaoEncontrado(): JsonResponse
+    {
+        return resposta_padrao(404, "erro_de_nao_encontrado", "Recurso não encontrado");
     }
 
     /**
