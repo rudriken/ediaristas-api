@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 trait TratarAPI
 {
@@ -38,6 +39,10 @@ trait TratarAPI
 
         if ($erro instanceof ModelNotFoundException) {
             return $this->erroDeNaoEncontrado();
+        }
+
+        if ($erro instanceof HttpException) {
+            return $this->erroDeHTTP($erro);
         }
 
         return $this->erroGenerico($erro);
@@ -90,6 +95,17 @@ trait TratarAPI
     protected function erroDeNaoEncontrado(): JsonResponse
     {
         return resposta_padrao(404, "erro_de_nao_encontrado", "Recurso não encontrado");
+    }
+
+    /**
+     * Retorna uma resposta para erro de HTTP
+     *
+     * @param HttpException $erro
+     * @return JsonResponse
+     */
+    protected function erroDeHTTP(HttpException $erro): JsonResponse
+    {
+        return resposta_padrao($erro->getStatusCode(), "erro_de_HTTP", $erro->getMessage());
     }
 
     /**
