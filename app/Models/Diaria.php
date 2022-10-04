@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -56,12 +56,18 @@ class Diaria extends Model
     static function todasDoUsuario(User $usuario): Collection
     {
         return self::
-            when($usuario->tipo_usuario === 1, function ($consulta) use ($usuario) {
-                $consulta->where("cliente_id", $usuario->id);
-            })->
-            when($usuario->tipo_usuario === 2, function ($consulta) use ($usuario) {
-                $consulta->where("diarista_id", $usuario->id);
-            })->
+            when(
+                $usuario->tipo_usuario === 1,
+                function ($consulta) use ($usuario) {
+                    $consulta->where("cliente_id", $usuario->id);
+                }
+            )->
+            when(
+                $usuario->tipo_usuario === 2,
+                function ($consulta) use ($usuario) {
+                    $consulta->where("diarista_id", $usuario->id);
+                }
+            )->
             get();
     }
 }
