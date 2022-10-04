@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
             if ($usuarioLogado->tipo_usuario == 1) {
                 return $diaria->cliente_id == $usuarioLogado->id;
             }
-            return true;
+            return $diaria->diarista_id === $usuarioLogado->id;
         });
     }
 }
