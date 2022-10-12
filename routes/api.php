@@ -10,6 +10,7 @@ use App\Http\Controllers\Diarista\ObtemDiaristasPorCEP;
 use App\Http\Controllers\Usuario\AutenticacaoController;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
+use App\Http\Controllers\Diarista\DefineEndereco;
 
 Route::get("/", IndexController::class);
 
@@ -22,6 +23,8 @@ Route::group(["middleware" => "auth:api"], function () {
         ->name("diarias.store");
     Route::get("/diarias/{diaria}", [DiariaCadastroController::class, "show"])
         ->name("diarias.show");
+    Route::put("/usuarios/endereco", DefineEndereco::class)
+        ->name("usuarios.definir-endereco");
     Route::post("/diarias/{diaria}/pagamentos", PagaDiaria::class)->name("diarias.pagar");
 });
 
