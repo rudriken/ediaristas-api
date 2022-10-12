@@ -2,10 +2,17 @@
 
 namespace App\Actions\Diarista;
 
+use App\Models\Endereco;
+use Illuminate\Support\Facades\Auth;
+
 class DefinirEndereco
 {
-    public function executar()
+    public function executar(array $dados)
     {
-        dd("cheguei na Action do Controller DefineEndereco");
+        $diarista = Auth::user();
+        return Endereco::updateOrCreate(
+            ["user_id" => $diarista->id],
+            $dados
+        );
     }
 }
