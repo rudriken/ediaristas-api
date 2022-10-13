@@ -10,6 +10,7 @@ use App\Http\Controllers\Diarista\ObtemDiaristasPorCEP;
 use App\Http\Controllers\Usuario\AutenticacaoController;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
+use App\Http\Controllers\Diarista\DefineCidadesAtendidas;
 use App\Http\Controllers\Diarista\DefineEndereco;
 
 Route::get("/", IndexController::class);
@@ -25,9 +26,11 @@ Route::group(["middleware" => "auth:api"], function () {
         ->name("diarias.show");
     Route::put("/usuarios/endereco", DefineEndereco::class)
         ->name("usuarios.definir-endereco");
+    Route::put("/usuarios/cidades-atendidas", DefineCidadesAtendidas::class)
+        ->name("usuarios.definir-cidades");
     Route::post("/diarias/{diaria}/pagamentos", PagaDiaria::class)->name("diarias.pagar");
 });
-
+/* ( . . . ) */
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
     ->name("diaristas.busca_por_cep");
 Route::get("/diaristas/disponibilidade", VerificaDisponibilidade::class)
