@@ -9,9 +9,9 @@ class DefinirEndereco
 {
     public function executar(array $dados)
     {
-        $diarista = Auth::user();
+        $usuario = Auth::user();
         return Endereco::updateOrCreate(
-            ["user_id" => $diarista->id],
+            ["user_id" => $usuario->id],
             $dados
         );
     }

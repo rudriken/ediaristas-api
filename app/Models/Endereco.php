@@ -24,4 +24,14 @@ class Endereco extends Model
         "cep",
         "user_id",
     ];
+
+    protected $visible = [
+        "logradouro",
+        "numero",
+        "complemento",
+        "bairro",
+        "cidade",
+        "estado",
+        "cep",
+    ];
 }

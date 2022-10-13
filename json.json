@@ -1,9 +1,9 @@
 {
-    "logradouro": "Rua Reno Pacheco",
-    "numero": "7",
-    "complemento": "Apt 101",
-    "bairro": "Presidente Roosevelt",
+    "logradouro": "Rua Rio Grande do Sul",
+    "numero": "1000",
+    "complemento": null,
+    "bairro": "Brasil",
     "cidade": "Uberlândia",
     "estado": "MG",
-    "cep": "38401076"
+    "cep": "38400650"
 }
