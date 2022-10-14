@@ -4,16 +4,16 @@ namespace App\Actions\Diaria;
 
 use App\Models\Diaria;
 use App\Models\Servico;
+use App\Servicos\ConsultaCidade\ConsultaCidadeInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Servicos\ConsultaCidade\Provedores\Ibge;
 
 class CriarDiaria
 {
 
-    private Ibge $consultaCidade;
+    private ConsultaCidadeInterface $consultaCidade;
 
-    public function __construct(Ibge $servico)
+    public function __construct(ConsultaCidadeInterface $servico)
     {
         $this->consultaCidade = $servico;
     }
@@ -42,7 +42,8 @@ class CriarDiaria
      * @param array $dados
      * @return float
      */
-    private function calcularComissao(array $dados): float {
+    private function calcularComissao(array $dados): float
+    {
         $servico = Servico::find($dados["servico_id"]);
         $porcentagem = $servico->porcentagem_comissao / 100;
         return $dados["preco"] * $porcentagem;

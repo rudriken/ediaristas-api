@@ -4,13 +4,13 @@ namespace App\Actions\Diarista;
 
 use App\Models\Cidade;
 use App\Models\User;
-use App\Servicos\ConsultaCidade\Provedores\Ibge;
+use App\Servicos\ConsultaCidade\ConsultaCidadeInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class DefinirCidadesAtendidas
 {
-    public function __construct(private Ibge $consultaCidade)
+    public function __construct(private ConsultaCidadeInterface $consultaCidade)
     {
     }
 
