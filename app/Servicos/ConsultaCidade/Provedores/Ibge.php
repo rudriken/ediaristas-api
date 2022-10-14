@@ -2,12 +2,13 @@
 
 namespace App\Servicos\ConsultaCidade\Provedores;
 
+use App\Servicos\ConsultaCidade\CidadeResponse;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 
 class Ibge
 {
-    public function codigoIBGE(int $codigo)
+    public function codigoIBGE(int $codigo): CidadeResponse
     {
         $url = sprintf(
             "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/%s",
@@ -20,5 +21,22 @@ class Ibge
                 "codigo_ibge" => "Código do IBGE inválido"
             ]);
         }
+
+        return $this->populaCidadeResponse($dados);
+    }
+
+    /**
+     * Define os dados do objeto de cidade
+     *
+     * @param array $dados
+     * @return CidadeResponse
+     */
+    private function populaCidadeResponse(array $dados): CidadeResponse
+    {
+        return new CidadeResponse(
+            $dados["id"],
+            $dados["nome"],
+            $dados["microrregiao"]["mesorregiao"]["UF"]["sigla"]
+        );
     }
 }

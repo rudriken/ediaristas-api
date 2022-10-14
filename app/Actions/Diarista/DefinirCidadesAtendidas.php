@@ -4,23 +4,28 @@ namespace App\Actions\Diarista;
 
 use App\Models\Cidade;
 use App\Models\User;
+use App\Servicos\ConsultaCidade\Provedores\Ibge;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class DefinirCidadesAtendidas
 {
+    public function __construct(private Ibge $consultaCidade)
+    {
+    }
+
     public function executar(array $cidades)
     {
         Gate::authorize("tipo-diarista");
         $cidadesIDs = [];
         foreach ($cidades as $cidade) {
-            // validar o código do IBGE na API
+            $cidadeValida = $this->consultaCidade->codigoIBGE($cidade["codigo_ibge"]);
             $cidadeModel = Cidade::firstOrCreate(
                 ["codigo_ibge" => $cidade["codigo_ibge"]],
                 [
-                    "cidade" => $cidade["cidade"],
+                    "cidade" => $cidadeValida->cidade,
                     "codigo_ibge" => $cidade["codigo_ibge"],
-                    "estado" => "XX"
+                    "estado" => $cidadeValida->estado
                 ]
             );
             $cidadesIDs[] = $cidadeModel->id;
