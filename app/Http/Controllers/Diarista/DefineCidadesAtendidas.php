@@ -20,6 +20,6 @@ class DefineCidadesAtendidas extends Controller
      */
     public function __invoke(Request $request)
     {
-        $this->definirCidadesAtendidas->executar();
+        $this->definirCidadesAtendidas->executar($request->cidades);
     }
 }

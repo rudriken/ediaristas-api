@@ -1,1 +1,1 @@
-SELECT id, nome, valor_minimo, qtd_horas FROM ediaristas_temp.servicos;
+SELECT * FROM ediaristas_temp.cidade_diarista;

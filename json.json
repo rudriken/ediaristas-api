@@ -1,9 +1,16 @@
 {
-    "logradouro": "Rua Rio Grande do Sul",
-    "numero": "1000",
-    "complemento": null,
-    "bairro": "Brasil",
-    "cidade": "Uberlândia",
-    "estado": "MG",
-    "cep": "38400650"
+    "cidades": [
+        {
+            "codigo_ibge": "3169604",
+            "cidade": "Tupaciguara"
+        },
+        {
+            "codigo_ibge": "3127107",
+            "cidade": "Frutal"
+        },
+        {
+            "codigo_ibge": "3170206",
+            "cidade": "Uberlândia"
+        }
+    ]
 }
