@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Diarista;
 
-use App\Actions\Diarista\DefinirEndereco;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\EnderecoDiaristaRequest;
 use \Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use App\Actions\Diarista\DefinirEndereco;
+use App\Http\Requests\EnderecoDiaristaRequest;
 
 class DefineEndereco extends Controller
 {

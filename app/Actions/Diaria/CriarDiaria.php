@@ -4,9 +4,9 @@ namespace App\Actions\Diaria;
 
 use App\Models\Diaria;
 use App\Models\Servico;
-use App\Servicos\ConsultaCidade\ConsultaCidadeInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Servicos\ConsultaCidade\ConsultaCidadeInterface;
 
 class CriarDiaria
 {

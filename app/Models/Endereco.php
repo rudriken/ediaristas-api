@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Endereco extends Model
 {
@@ -11,8 +11,6 @@ class Endereco extends Model
 
     /**
      * Define os campos liberados para definição de dados em massa
-     *
-     * @var array
      */
     protected $fillable = [
         "logradouro",
@@ -25,6 +23,9 @@ class Endereco extends Model
         "user_id",
     ];
 
+    /**
+     * Define os campos que serão serializados, ou visíveis na resposta
+     */
     protected $visible = [
         "logradouro",
         "numero",

@@ -2,13 +2,20 @@
 
 namespace App\Servicos\ConsultaCidade\Provedores;
 
-use App\Servicos\ConsultaCidade\CidadeResponse;
-use App\Servicos\ConsultaCidade\ConsultaCidadeInterface;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
+use App\Servicos\ConsultaCidade\CidadeResponse;
+use App\Servicos\ConsultaCidade\ConsultaCidadeInterface;
 
 class Ibge implements ConsultaCidadeInterface
 {
+
+    /**
+     * Busca um código do IBGE na API
+     *
+     * @param integer $codigo
+     * @return CidadeResponse
+     */
     public function codigoIBGE(int $codigo): CidadeResponse
     {
         $url = sprintf(
