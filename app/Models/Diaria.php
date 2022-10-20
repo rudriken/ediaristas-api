@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Diaria extends Model
 {
@@ -34,6 +35,16 @@ class Diaria extends Model
     public function cliente(): BelongsTo
     {
         return $this->belongsTo(User::class, "cliente_id");
+    }
+
+    /**
+     * Define a relação com os candidatos a realizar a diária
+     *
+     * @return HasMany
+     */
+    public function candidatos(): HasMany
+    {
+        return $this->hasMany(CandidatosDiaria::class);
     }
 
     /**
