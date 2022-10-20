@@ -1,1 +1,1 @@
-SELECT * FROM ediaristas_temp.cidade_diarista;
+SELECT * FROM ediaristas_temp.candidatos_diaria;
