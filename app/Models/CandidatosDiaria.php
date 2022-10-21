@@ -11,6 +11,13 @@ class CandidatosDiaria extends Model
     use HasFactory;
 
     /**
+     * Define campos permitidos na definição de dados em massa
+     *
+     * @var array
+     */
+    protected $fillable = ["diarista_id", "diaria_id"];
+
+    /**
      * Define o nome da tabela que este Model representará
      *
      * @var string
