@@ -30,7 +30,7 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::put("/usuarios/cidades-atendidas", DefineCidadesAtendidas::class)
         ->name("usuarios.definir-cidades");
     Route::post("/diarias/{diaria}/pagamentos", PagaDiaria::class)->name("diarias.pagar");
-    Route::post("/diarias/{diaria}/candidatas", CandidataDiarista::class)
+    Route::post("/diarias/{diaria}/candidatos", CandidataDiarista::class)
         ->name("diarias.candidatar");
 });
 /* ( . . . ) */
