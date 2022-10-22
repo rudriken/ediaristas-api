@@ -66,19 +66,40 @@ class Diaria extends Model
      */
     static function todasDoUsuario(User $usuario): Collection
     {
-        return self::
-            when(
-                $usuario->tipo_usuario === 1,
-                function ($consulta) use ($usuario) {
-                    $consulta->where("cliente_id", $usuario->id);
-                }
-            )->
-            when(
-                $usuario->tipo_usuario === 2,
-                function ($consulta) use ($usuario) {
-                    $consulta->where("diarista_id", $usuario->id);
-                }
-            )->
-            get();
+        return self::when(
+            $usuario->tipo_usuario === 1,
+            function ($consulta) use ($usuario) {
+                $consulta->where("cliente_id", $usuario->id);
+            }
+        )->when(
+            $usuario->tipo_usuario === 2,
+            function ($consulta) use ($usuario) {
+                $consulta->where("diarista_id", $usuario->id);
+            }
+        )->get();
+    }
+
+    /**
+     * Define um(a) candidato(a) para a diária
+     *
+     * @param integer $diaristaId
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function defineCandidato(int $diaristaId): Model
+    {
+        return $this->candidatos()->create(["diarista_id" => $diaristaId]);
+    }
+
+    /**
+     * Define o(a) diarista para realizar a diária e muda o status da mesma para
+     *
+     * @param integer $diaristaId
+     * @return boolean
+     */
+    public function confirmarDiaria(int $diaristaId): bool
+    {
+        $this->diarista_id = $diaristaId;
+        $this->status = 3;
+        return $this->save();
     }
 }

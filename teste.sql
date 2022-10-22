@@ -1,3 +1,2 @@
-SELECT
-    id, data_atendimento, `status`, logradouro, cliente_id, diarista_id, servico_id, created_at
-    FROM ediaristas_temp.diarias;
+DELETE FROM ediaristas_temp.candidatos_diaria WHERE (`id` = '2');
+SELECT * FROM ediaristas_temp.candidatos_diaria;

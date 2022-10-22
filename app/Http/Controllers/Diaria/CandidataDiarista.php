@@ -21,5 +21,6 @@ class CandidataDiarista extends Controller
     public function __invoke(Diaria $diaria)
     {
         $this->candidatarDiarista->executar($diaria);
+        return resposta_padrao(200, "sucesso", "Ação executada com sucesso");
     }
 }
