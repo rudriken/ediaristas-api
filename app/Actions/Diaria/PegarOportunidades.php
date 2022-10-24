@@ -2,10 +2,14 @@
 
 namespace App\Actions\Diaria;
 
+use App\Models\Diaria;
+use Illuminate\Support\Facades\Auth;
+
 class PegarOportunidades
 {
     public function executar()
     {
-        dd("cheguei na action 'PegarOportunidades'");
+        $usuario = Auth::user();
+        return Diaria::oportunidadesPorCidade($usuario);
     }
 }
