@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Diaria;
 
 use App\Actions\Diaria\PegarOportunidades;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OportunidadeCollection;
 use Illuminate\Http\Request;
 
 class Oportunidades extends Controller
@@ -20,6 +21,7 @@ class Oportunidades extends Controller
      */
     public function __invoke(Request $request)
     {
-        return $this->pegarOportunidades->executar();
+        $oportunidades = $this->pegarOportunidades->executar();
+        return new OportunidadeCollection($oportunidades);
     }
 }

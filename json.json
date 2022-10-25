@@ -1,16 +1,45 @@
 {
-    "cidades": [
+    "id": 11,
+    "status": 3,
+    "valor_comissao": "1.00",
+    "nome_servico": "Limpeza Comum",
+    "cliente": {
+        "id": 75,
+        "nome_completo": "Karolline Maria Silva",
+        "nascimento": "1997-01-01",
+        "telefone": "54997451241",
+        "reputacao": 4,
+        "tipo_usuario": 1,
+        "foto_usuario": ""
+    },
+    "data_atendimento": "2022-08-31T10:00:00Z",
+    "tempo_atendimento": 8,
+    "preco": "12.00",
+    "logradouro": "Av. Comendador Alexandrino Garcia",
+    "numero": "1315",
+    "complemento": null,
+    "bairro": "Marta Helena",
+    "cidade": "Uberlândia",
+    "cep": "38402228",
+    "estado": "MG",
+    "codigo_ibge": 310059,
+    "quantidade_quartos": 1,
+    "quantidade_salas": 1,
+    "quantidade_cozinhas": 1,
+    "quantidade_banheiros": 1,
+    "quantidade_quintais": 1,
+    "quantidade_outros": 1,
+    "observacoes": null,
+    "motivo_cancelamento": null,
+    "created_at": "2022-08-26T15:44:14.000000Z",
+    "updated_at": "2022-10-22T14:10:09.000000Z",
+    "servico": 1,
+    "diarista": 29,
+    "links": [
         {
-            "codigo_ibge": "3169604",
-            "cidade": "Tupaciguara"
-        },
-        {
-            "codigo_ibge": "3127107",
-            "cidade": "Frutal"
-        },
-        {
-            "codigo_ibge": "3170206",
-            "cidade": "Uberlândia"
+            "type": "GET",
+            "rel": "self",
+            "uri": "http://localhost:8000/api/diarias/11"
         }
     ]
 }
