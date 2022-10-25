@@ -47,6 +47,21 @@ class Oportunidade extends JsonResource
             "quantidade_quintais"   => $this->quantidade_quintais,
             "quantidade_outros"     => $this->quantidade_outros,
 
+            "avaliacoes_cliente"    => [
+                [
+                    "descricao"         => "Muito bom cliente!",
+                    "nota"              => 5,
+                    "nome_avaliador"    => "Pedro",
+                    "foto_avaliador"    => null,
+                ],
+                [
+                    "descricao"         => "Ótimo cliente!",
+                    "nota"              => 5,
+                    "nome_avaliador"    => "Maria",
+                    "foto_avaliador"    => null,
+                ],
+            ],
+
             "links"                 => (new HateoasOportunidade)->links($this->resource),
         ];
     }
