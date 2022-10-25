@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Hateoas\Oportunidade as HateoasOportunidade;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class Oportunidade extends JsonResource
         return [
             "id"                    => $this->id,
 
-            "nome_servico"          => $this->servico_id,
+            "nome_servico"          => $this->servico->nome,
 
             "cliente"               => [
                 "nome_completo"         => $this->cliente->nome_completo,
@@ -46,6 +47,7 @@ class Oportunidade extends JsonResource
             "quantidade_quintais"   => $this->quantidade_quintais,
             "quantidade_outros"     => $this->quantidade_outros,
 
+            "links"                 => (new HateoasOportunidade)->links($this->resource),
         ];
     }
 }
