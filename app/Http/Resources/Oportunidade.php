@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Hateoas\Oportunidade as HateoasOportunidade;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Hateoas\Oportunidade as HateoasOportunidade;
 
 class Oportunidade extends JsonResource
 {

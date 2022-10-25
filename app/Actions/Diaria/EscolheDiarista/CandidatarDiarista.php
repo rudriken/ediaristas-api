@@ -2,13 +2,13 @@
 
 namespace App\Actions\Diaria\EscolheDiarista;
 
-use App\Models\Diaria;
-use App\Verificadores\Diaria\ValidaStatusDiaria;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Diaria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
+use App\Verificadores\Diaria\ValidaStatusDiaria;
 
 class CandidatarDiarista
 {

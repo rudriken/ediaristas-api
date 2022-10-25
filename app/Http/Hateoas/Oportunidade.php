@@ -8,8 +8,9 @@ class Oportunidade extends HateoasBase implements HateoasInterface
 {
 
     /**
-     * Retorna os links do HATEOAS para a rota inicial
+     * Retorna os links do HATEOAS para oportunidade
      *
+     * @param Model|null $diaria
      * @return array
      */
     public function links(?Model $diaria = null): array

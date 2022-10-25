@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Diaria extends Model
 {
@@ -104,7 +104,13 @@ class Diaria extends Model
         return $this->save();
     }
 
-    static public function oportunidadesPorCidade(User $diarista)
+    /**
+     * Retorna a lista de oportunidades para o(a) diarista conforme sua região
+     *
+     * @param User $diarista
+     * @return Collection
+     */
+    static public function oportunidadesPorCidade(User $diarista): Collection
     {
         $cidadesAtendidasPeloDiarista = $diarista->cidadesAtendidasDiarista();
         return self
