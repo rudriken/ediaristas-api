@@ -1,23 +1,28 @@
 {
-    "id": 1,
-    "nome": "Limpeza Comum",
-    "valor_minimo": "50.00",
-    "qtd_horas": 3,
-    "porcentagem_comissao": "10.00",
-    "horas_quarto": 1,
-    "valor_quarto": "11.00",
-    "horas_sala": 1,
-    "valor_sala": "10.00",
-    "horas_banheiro": 1,
-    "valor_banheiro": "12.00",
-    "horas_cozinha": 2,
-    "valor_cozinha": "15.00",
-    "horas_quintal": 1,
-    "valor_quintal": "12.00",
-    "horas_outros": 2,
-    "valor_outros": "16.00",
-    "icone": "1",
-    "posicao": 1,
-    "created_at": null,
-    "updated_at": null
+    "json": {
+        "destination_addresses": [
+            "R. República do Piratini - Nossa Sra. das Graças, Uberlândia - MG, 38402-028, Brazil"
+        ],
+        "origin_addresses": [
+            "R. Pedro Quirino da Silva - Nossa Sra. das Graças, Uberlândia - MG, 38402-075, Brazil"
+        ],
+        "rows": [
+            {
+                "elements": [
+                    {
+                        "distance": {
+                            "text": "0.3 km",
+                            "value": 291
+                        },
+                        "duration": {
+                            "text": "1 min",
+                            "value": 52
+                        },
+                        "status": "OK"
+                    }
+                ]
+            }
+        ],
+        "status": "OK"
+    }
 }

@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.7",
         "symfony/http-client": "^6.0",
         "symfony/mailgun-mailer": "^6.0",
+        "teampickr/php-google-maps-distance-matrix": "^0.6.0",
         "tymon/jwt-auth": "1.0.x-dev"
     },
     "require-dev": {

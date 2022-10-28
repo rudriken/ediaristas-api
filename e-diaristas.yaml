@@ -20,6 +20,7 @@ tags:
     - name: Diaristas
     - name: Endereços
     - name: Autenticação
+    - name: Oportunidades
 paths:
     /api:
         get:
@@ -559,6 +560,76 @@ paths:
                                 $ref: "#/components/schemas/ErrorResponse"
             security:
                 - JWT: []
+    /api/diarias/{diaria}/candidatos:
+        post:
+            operationId: CandidatosDiaria
+            tags:
+                - Diárias
+            description: Realizar candidatura de diarista logado(a) para uma diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser disputada
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                "200":
+                    description: Candidatura realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/oportunidades:
+        get:
+            operationId: getOportunidades
+            tags:
+                - Oportunidades
+            description: Lista as oportunidades disponíveis para o(a) diarista logado(a)
+            responses:
+                "200":
+                    description: Oportunidades listadas com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/OportunidadeResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
 components:
     schemas:
         DiaristaLocalidadePageResponse:
@@ -1039,6 +1110,96 @@ components:
                     type: string
                 codigo_ibge:
                     type: string
+        OportunidadeResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                status:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                        - 3
+                        - 4
+                        - 5
+                        - 6
+                valor_comissao:
+                    type: number
+                    format: double
+                nome_servico:
+                    type: string
+                cliente:
+                    $ref: "#/components/schemas/UsuarioDiariaRequest"
+                data_atendimento:
+                    type: string
+                    format: date-time
+                tempo_atendimento:
+                    type: integer
+                preco:
+                    type: number
+                    format: double
+                logradouro:
+                    type: string
+                numero:
+                    type: string
+                complemento:
+                    type: string
+                bairro:
+                    type: string
+                cidade:
+                    type: string
+                cep:
+                    type: string
+                estado:
+                    type: string
+                codigo_ibge:
+                    type: string
+                quantidade_quartos:
+                    type: integer
+                quantidade_salas:
+                    type: integer
+                quantidade_cozinhas:
+                    type: integer
+                quantidade_banheiros:
+                    type: integer
+                quantidade_quintais:
+                    type: integer
+                quantidade_outros:
+                    type: integer
+                observacoes:
+                    type: string
+                motivo_cancelamento:
+                    type: string
+                created_at:
+                    type: string
+                    format: date-time
+                updated_at:
+                    type: string
+                    format: date-time
+                servico:
+                    type: integer
+                avaliacoes_cliente:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/AvaliacaoResponse"
+                links:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/LinkResponse"
+        AvaliacaoResponse:
+            type: object
+            properties:
+                descricao:
+                    type: string
+                nota:
+                    type: number
+                    format: double
+                nome_avaliador:
+                    type: string
+                foto_avaliador:
+                    type: string
+                    format: uri
     securitySchemes:
         JWT:
             type: http
