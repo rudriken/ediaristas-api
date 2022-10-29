@@ -2,17 +2,21 @@
 
 namespace App\Servicos\ConsultaDistancia\Provedores;
 
+use App\Servicos\ConsultaDistancia\ConsultaDistanciaInterface;
 use App\Servicos\ConsultaDistancia\DistanciaResponse;
 use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
 use TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix;
 
-class GoogleMatrix
+class GoogleMatrix implements ConsultaDistanciaInterface
 {
-    public function distanciaEntre2CEPs(string $origem, string $destino)
+    public function __construct(private StandardLicense $licenca)
     {
-        $licenca = new StandardLicense(config("google.key"));
+    }
 
-        $resposta = DistanceMatrix::license($licenca)
+    public function distanciaEntre2CEPs(string $origem, string $destino): DistanciaResponse
+    {
+
+        $resposta = DistanceMatrix::license($this->licenca)
             ->addOrigin($this->formataCEP($origem))
             ->addDestination($this->formataCEP($destino))
             ->request();

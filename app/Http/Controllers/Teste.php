@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Servicos\ConsultaDistancia\Provedores\GoogleMatrix;
+use App\Servicos\ConsultaDistancia\ConsultaDistanciaInterface;
 
 class Teste extends Controller
 {
 
-    public function __construct(private GoogleMatrix $consultaDistancia)
+    public function __construct(private ConsultaDistanciaInterface $consultaDistancia)
     {
     }
 
