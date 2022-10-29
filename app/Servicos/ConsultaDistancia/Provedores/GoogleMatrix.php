@@ -2,6 +2,7 @@
 
 namespace App\Servicos\ConsultaDistancia\Provedores;
 
+use App\Servicos\ConsultaDistancia\DistanciaResponse;
 use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
 use TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix;
 
@@ -11,10 +12,14 @@ class GoogleMatrix
     {
         $licenca = new StandardLicense(config("google.key"));
 
-        return DistanceMatrix::license($licenca)
+        $resposta = DistanceMatrix::license($licenca)
             ->addOrigin($this->formataCEP($origem))
             ->addDestination($this->formataCEP($destino))
             ->request();
+
+        return new DistanciaResponse(
+            $resposta->json["rows"][0]["elements"][0]["distance"]["value"] / 1000
+        );
     }
 
     /**

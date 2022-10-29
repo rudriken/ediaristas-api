@@ -1,6 +1,6 @@
 <?php
 
-[
+$json = [
     "destination_addresses" =>  [
         0 => "R. República do Piratini - Nossa Sra. das Graças, Uberlândia - MG, 38402-028, Brazil",
     ],
@@ -26,5 +26,3 @@
     ],
     "status" => "OK",
 ];
-
-
