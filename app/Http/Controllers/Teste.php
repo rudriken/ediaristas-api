@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Servicos\ConsultaDistancia\ConsultaDistanciaInterface;
+use App\Models\Diaria;
+use App\Tarefas\Diarista\SelecionaDiaristaIndice;
 
 class Teste extends Controller
 {
-
-    public function __construct(private ConsultaDistanciaInterface $consultaDistancia)
-    {
-    }
 
     /**
      * Handle the incoming request.
@@ -17,9 +14,9 @@ class Teste extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke()
+    public function __invoke(SelecionaDiaristaIndice $selecionaDiarista)
     {
-        $resposta = $this->consultaDistancia->distanciaEntre2CEPs("12345678", "38402028");
-        dd($resposta);
+        $diaria = Diaria::find(61);
+        $selecionaDiarista->executar($diaria);
     }
 }
