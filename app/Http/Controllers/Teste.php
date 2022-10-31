@@ -19,7 +19,7 @@ class Teste extends Controller
      */
     public function __invoke()
     {
-        $resposta = $this->consultaDistancia->distanciaEntre2CEPs("38402075", "38402028");
+        $resposta = $this->consultaDistancia->distanciaEntre2CEPs("12345678", "38402028");
         dd($resposta);
     }
 }
