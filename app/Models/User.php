@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -143,5 +144,15 @@ class User extends Authenticatable implements JWTSubject
     public function cidadesAtendidasDiarista(): array
     {
         return $this->cidadesAtendidas()->pluck("codigo_ibge")->toArray();
+    }
+
+    /**
+     * Define a relação do(a) diarista com o seu endereço
+     *
+     * @return HasOne
+     */
+    public function enderecoDiarista(): HasOne
+    {
+        return $this->hasOne(Endereco::class, "user_id");
     }
 }
