@@ -92,7 +92,7 @@ class Diaria extends Model
     }
 
     /**
-     * Define o(a) diarista para realizar a diária e muda o status da mesma para
+     * Define o(a) diarista para realizar a diária e muda o status da mesma para 2
      *
      * @param integer $diaristaId
      * @return boolean

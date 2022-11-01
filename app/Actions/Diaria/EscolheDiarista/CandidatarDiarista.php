@@ -4,6 +4,7 @@ namespace App\Actions\Diaria\EscolheDiarista;
 
 use Carbon\Carbon;
 use App\Models\Diaria;
+use App\Tarefas\Diarista\SelecionaDiaristaIndice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Model;
@@ -12,8 +13,10 @@ use App\Verificadores\Diaria\ValidaStatusDiaria;
 
 class CandidatarDiarista
 {
-    public function __construct(private ValidaStatusDiaria $validaStatusDiaria)
-    {
+    public function __construct(
+        private ValidaStatusDiaria $validaStatusDiaria,
+        private SelecionaDiaristaIndice $selecionaDiarista
+    ) {
     }
 
     /**
@@ -31,7 +34,8 @@ class CandidatarDiarista
         if ($this->criadaAMenosDe24Horas($diaria)) {
             /* quando a diária foi criada a menos de 24 horas */
             $this->verificarDuplicidadeDeCandidato($diaria);
-            return $diaria->defineCandidato($diaristaId);
+            $diaria->defineCandidato($diaristaId);
+            return $this->selecionaDiaristaInstantaneamente($diaria);
         }
         /* quando a diária foi criada a mais de 24 horas */
         return $diaria->confirmarDiaria($diaristaId);
@@ -67,5 +71,20 @@ class CandidatarDiarista
         $dataCriacaoDiaria = new Carbon($diaria->created_at);
         $horasDesdeACriacao = $dataCriacaoDiaria->diffInHours(Carbon::now(), false);
         return $horasDesdeACriacao < 24;
+    }
+
+    /**
+     * Seleciona diarista automaticamente quando for o(a) terceiro(a) candidato(a)
+     *
+     * @param Diaria $diaria
+     * @return boolean
+     */
+    public function selecionaDiaristaInstantaneamente(Diaria $diaria): bool
+    {
+        $quantidadeCandidatos = $diaria->candidatos()->count();
+        if ($quantidadeCandidatos === 3) {
+            return $diaria->confirmarDiaria($this->selecionaDiarista->executar($diaria));
+        }
+        return false;
     }
 }
