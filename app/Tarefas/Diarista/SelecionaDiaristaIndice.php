@@ -24,11 +24,16 @@ class SelecionaDiaristaIndice
 
         foreach ($diaria->candidatos as $candidato) {
 
-            // a distância entre as residências do(a) candidato(a) e do serviço
-            $distancia = $this->consultaDistancia->distanciaEntre2CEPs(
-                $candidato->candidato->enderecoDiarista->cep,
-                $diaria->cep
-            );
+            try {
+                // a distância entre as residências do(a) candidato(a) e do serviço
+                $distancia = $this->consultaDistancia->distanciaEntre2CEPs(
+                    $candidato->candidato->enderecoDiarista->cep,
+                    $diaria->cep
+                );
+            } catch (\Throwable $th) {
+                continue;
+            }
+
 
             // a reputação do(a) candidato(a)
             $reputacao = $candidato->candidato->reputacao;
