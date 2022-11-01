@@ -17,6 +17,7 @@ class Teste extends Controller
     public function __invoke(SelecionaDiaristaIndice $selecionaDiarista)
     {
         $diaria = Diaria::find(61);
-        $selecionaDiarista->executar($diaria);
+        $diaristaEscolhidoId = $selecionaDiarista->executar($diaria);
+        dd($diaristaEscolhidoId);
     }
 }
