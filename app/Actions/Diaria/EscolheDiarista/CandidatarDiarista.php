@@ -54,7 +54,7 @@ class CandidatarDiarista
         $login = Auth::user();
         $diarista = new User;
 
-        $diarista->id                   = $login->id;;
+        $diarista->id                   = $login->id;
         $diarista->nome_completo        = $login->nome_completo;
         $diarista->cpf                  = $login->cpf;
         $diarista->nascimento           = $login->nascimento;
