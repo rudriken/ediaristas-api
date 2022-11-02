@@ -4,6 +4,7 @@ namespace App\Actions\Diaria\EscolheDiarista;
 
 use Carbon\Carbon;
 use App\Models\Diaria;
+use App\Models\User;
 use App\Tarefas\Diarista\SelecionaDiaristaIndice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -30,6 +31,7 @@ class CandidatarDiarista
     {
         Gate::authorize("tipo-diarista");
         $this->validaStatusDiaria->executar($diaria, 2);
+        $this->verificaEnderecoDiarista();
         $diaristaId = Auth::user()->id;
         if ($this->criadaAMenosDe24Horas($diaria)) {
             /* quando a diária foi criada a menos de 24 horas */
@@ -39,6 +41,42 @@ class CandidatarDiarista
         }
         /* quando a diária foi criada a mais de 24 horas */
         return $diaria->confirmarDiaria($diaristaId);
+    }
+
+    /**
+     * Verifica se o(a) diarista possui endereço cadastrado na plataforma
+     *
+     * @return void
+     */
+    private function verificaEnderecoDiarista(): void
+    {
+        // $quantidadeEndereco = Auth::user()->enderecoDiarista()->count();
+        $login = Auth::user();
+        $diarista = new User;
+
+        $diarista->id                   = $login->id;;
+        $diarista->nome_completo        = $login->nome_completo;
+        $diarista->cpf                  = $login->cpf;
+        $diarista->nascimento           = $login->nascimento;
+        $diarista->foto_documento       = $login->foto_documento;
+        $diarista->foto_usuario         = $login->foto_usuario;
+        $diarista->telefone             = $login->telefone;
+        $diarista->tipo_usuario         = $login->tipo_usuario;
+        $diarista->chave_pix            = $login->chave_pix;
+        $diarista->reputacao            = $login->reputacao;
+        $diarista->email                = $login->email;
+        $diarista->email_verified_at    = $login->email_verified_at;
+        $diarista->password             = $login->password;
+        $diarista->remember_token       = $login->remember_token;
+        $diarista->created_at           = $login->created_at;
+        $diarista->updated_at           = $login->updated_at;
+
+        $quantidadeEndereco = $diarista->enderecoDiarista()->count();
+        if ($quantidadeEndereco === 0) {
+            throw ValidationException::withMessages([
+                "endereco_diarista" => "O(a) diarista deve ter o endereço cadastrado"
+            ]);
+        }
     }
 
     /**

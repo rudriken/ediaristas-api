@@ -1,2 +1,2 @@
-SELECT id, logradouro, numero, complemento, bairro, cidade, estado, cep, user_id
-	FROM ediaristas_temp.enderecos;
+DELETE FROM ediaristas_temp.candidatos_diaria WHERE (id = '6');
+SELECT * FROM ediaristas_temp.candidatos_diaria;
