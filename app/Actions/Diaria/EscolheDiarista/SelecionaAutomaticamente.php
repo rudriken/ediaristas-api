@@ -16,7 +16,6 @@ class SelecionaAutomaticamente
     {
         $diarias = Diaria::pagasComMaisDe24Horas();
         foreach ($diarias as $diaria) {
-            dd($diaria);
             if ($diaria->candidatos_count === 1) {
                 $diaria->confirmarDiaria($diaria->candidatos[0]->diarista_id);
             }
