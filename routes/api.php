@@ -14,6 +14,7 @@ use App\Http\Controllers\Usuario\AutenticacaoController;
 use App\Http\Controllers\Diarista\DefineCidadesAtendidas;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
+use App\Http\Controllers\Diaria\ConfirmaPresenca;
 use App\Http\Controllers\Teste;
 
 Route::get("/teste", Teste::class);
@@ -37,6 +38,8 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::post("/diarias/{diaria}/candidatos", CandidataDiarista::class)
         ->name("diarias.candidatar");
     Route::get("/oportunidades", Oportunidades::class)->name("oportunidades.index");
+    Route::patch("/diarias/{diaria}/presenca", ConfirmaPresenca::class)
+        ->name("diarias.confirmar");
 });
 /* ( . . . ) */
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
