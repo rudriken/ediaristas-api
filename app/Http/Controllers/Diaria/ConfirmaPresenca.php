@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Diaria;
 
 use App\Actions\Diaria\ConfirmarPresenca;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Diaria;
 
 class ConfirmaPresenca extends Controller
 {
@@ -13,14 +13,8 @@ class ConfirmaPresenca extends Controller
     {
     }
 
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Diaria $diaria)
     {
-        $this->confirmarPresenca->executar();
+        $this->confirmarPresenca->executar($diaria);
     }
 }
