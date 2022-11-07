@@ -127,12 +127,12 @@ class Diaria extends Model
             ->get();
     }
 
-    // /**
-    //  * Retorna todas as diárias pagas com mais de 24 horas de criadas
-    //  *
-    //  * @return Collection
-    //  */
-    static public function pagasComMaisDe24Horas(): mixed
+    /**
+     * Retorna todas as diárias pagas com mais de 24 horas de criadas
+     *
+     * @return Collection<Diaria>
+     */
+    static public function pagasComMaisDe24Horas(): Collection
     {
         return self::where("status", 2)
             ->where("created_at", "<", Carbon::now()->subHours(24))

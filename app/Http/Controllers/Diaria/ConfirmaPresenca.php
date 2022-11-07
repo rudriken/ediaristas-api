@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Diaria;
 
-use App\Actions\Diaria\ConfirmarPresenca;
-use App\Http\Controllers\Controller;
 use App\Models\Diaria;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Actions\Diaria\ConfirmarPresenca;
 
 class ConfirmaPresenca extends Controller
 {

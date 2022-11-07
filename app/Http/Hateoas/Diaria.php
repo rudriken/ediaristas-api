@@ -3,8 +3,8 @@
 namespace App\Http\Hateoas;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class Diaria extends HateoasBase implements HateoasInterface
 {

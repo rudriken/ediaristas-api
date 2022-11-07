@@ -2,12 +2,11 @@
 
 namespace App\Actions\Diaria;
 
-use App\Models\Diaria;
-use App\Verificadores\Diaria\ValidaStatusDiaria;
 use Carbon\Carbon;
-use Exception;
+use App\Models\Diaria;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
+use App\Verificadores\Diaria\ValidaStatusDiaria;
 
 class ConfirmarPresenca
 {
@@ -32,6 +31,12 @@ class ConfirmarPresenca
         return $diaria->save();
     }
 
+    /**
+     * Valida se a data atual é menor que a data de atendimento
+     *
+     * @param Diaria $diaria
+     * @return void
+     */
     private function validaDataAtendimento(Diaria $diaria): void
     {
         $dataAtendimento = Carbon::parse($diaria->data_atendimento);
@@ -39,7 +44,7 @@ class ConfirmarPresenca
         if ($agora < $dataAtendimento) {
             throw ValidationException::withMessages([
                 "data_atendimento" =>
-                    "Só é possível confirmar a presença após a data de atendimento"
+                "Só é possível confirmar a presença após a data de atendimento"
             ]);
         }
     }

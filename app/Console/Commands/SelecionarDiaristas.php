@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\Diaria\EscolheDiarista\SelecionaAutomaticamente;
 use Illuminate\Console\Command;
+use App\Actions\Diaria\EscolheDiarista\SelecionaAutomaticamente;
 
 class SelecionarDiaristas extends Command
 {
@@ -28,7 +28,8 @@ class SelecionarDiaristas extends Command
     protected $description = 'Verifica as diárias com mais de 24 horas e seleciona o(a) diarista mais apropriado(a)';
 
     /**
-     * Execute the console command.
+     * Busca as diárias pagas com mais de 24 horas de criadas e
+     * escolhe o(a) diarista mais apropriado(a) para ela
      *
      * @return int
      */

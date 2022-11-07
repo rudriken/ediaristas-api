@@ -3,14 +3,14 @@
 namespace App\Actions\Diaria\EscolheDiarista;
 
 use Carbon\Carbon;
-use App\Models\Diaria;
 use App\Models\User;
-use App\Tarefas\Diarista\SelecionaDiaristaIndice;
+use App\Models\Diaria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
 use App\Verificadores\Diaria\ValidaStatusDiaria;
+use App\Tarefas\Diarista\SelecionaDiaristaIndice;
 
 class CandidatarDiarista
 {
