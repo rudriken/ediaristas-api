@@ -40,6 +40,16 @@ class Diaria extends Model
     }
 
     /**
+     * Define a relação com diarista
+     *
+     * @return BelongsTo
+     */
+    public function diarista(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "diarista_id");
+    }
+
+    /**
      * Define a relação com os candidatos a realizar a diária
      *
      * @return HasMany
