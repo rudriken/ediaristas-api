@@ -581,6 +581,59 @@ paths:
                         "application/json":
                             schema:
                                 $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias/{diaria}/presenca:
+        patch:
+            operationId: confirmarPresenca
+            tags:
+                 - Diárias
+            description: Confirmar a presença do(a) diarista para a diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser confirmada presença do(a) diarista
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                "200":
+                    description: Confirmação de presença do(a) diarista realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
                 "401":
                     description: Usuário não está autenticado
                     content:
