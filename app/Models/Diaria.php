@@ -60,6 +60,16 @@ class Diaria extends Model
     }
 
     /**
+     * Define a relação com as avaliações do(a) cliente e diarista
+     *
+     * @return HasMany
+     */
+    public function avaliacoes(): HasMany
+    {
+        return $this->hasMany(Avaliacao::class);
+    }
+
+    /**
      * Define o status da diária como pago
      *
      * @return boolean
