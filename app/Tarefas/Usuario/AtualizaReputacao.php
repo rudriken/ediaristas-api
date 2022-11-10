@@ -4,7 +4,7 @@ namespace App\Tarefas\Usuario;
 
 use App\Models\User;
 
-class CalculaReputacao
+class AtualizaReputacao
 {
 
     /**
