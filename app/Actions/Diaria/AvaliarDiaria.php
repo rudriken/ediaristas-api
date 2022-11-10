@@ -3,13 +3,19 @@
 namespace App\Actions\Diaria;
 
 use App\Models\Diaria;
+use App\Tarefas\Usuario\CalculaReputacao;
 use Illuminate\Support\Facades\Auth;
 
 class AvaliarDiaria
 {
+    public function __construct(private CalculaReputacao $calculaReputacao)
+    {
+    }
+
     public function executar(Diaria $diaria, array $dadosAvaliacao)
     {
-        return $this->criaAvaliacao($diaria, $dadosAvaliacao);
+        $this->criaAvaliacao($diaria, $dadosAvaliacao);
+        $this->calculaReputacao->executar($this->obtemUsuarioAvaliadoId($diaria));
     }
 
     private function criaAvaliacao(Diaria $diaria, array $dadosAvaliacao)
