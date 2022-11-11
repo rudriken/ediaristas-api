@@ -1,3 +1,1 @@
-SELECT id, nome_completo, nascimento, tipo_usuario, email, reputacao
-    FROM ediaristas_temp.users
-    WHERE id = 75;
+UPDATE ediaristas_temp.diarias SET status = 4 WHERE (id = 61);
