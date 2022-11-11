@@ -15,6 +15,10 @@ class AvaliaDiaria extends Controller
 
     public function __invoke(Diaria $diaria, Request $requisicao)
     {
+        $requisicao->validate([
+            "nota" => ["required", "integer", "min:0", "max:5"],
+            "descricao" => ["required", "string"],
+        ]);
         return $this->avaliarDiaria->executar($diaria, $requisicao->all());
     }
 }

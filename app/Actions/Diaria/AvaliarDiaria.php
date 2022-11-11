@@ -4,16 +4,22 @@ namespace App\Actions\Diaria;
 
 use App\Models\Diaria;
 use App\Tarefas\Usuario\AtualizaReputacao;
+use App\Verificadores\Diaria\ValidaStatusDiaria;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AvaliarDiaria
 {
-    public function __construct(private AtualizaReputacao $atualizaReputacao)
-    {
+    public function __construct(
+        private AtualizaReputacao $atualizaReputacao,
+        private ValidaStatusDiaria $validaStatusDiaria
+    ) {
     }
 
     public function executar(Diaria $diaria, array $dadosAvaliacao)
     {
+        Gate::authorize("dono-diaria", $diaria);
+        $this->validaStatusDiaria->executar($diaria, 4);
         $this->criaAvaliacao($diaria, $dadosAvaliacao);
         $this->atualizaReputacao->executar($this->obtemUsuarioAvaliadoId($diaria));
     }
