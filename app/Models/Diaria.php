@@ -160,4 +160,15 @@ class Diaria extends Model
             ->withCount("candidatos")
             ->get();
     }
+
+    /**
+     * Verifica se o usuário logado já avaliou determinada diária
+     *
+     * @param integer $usuarioId
+     * @return boolean
+     */
+    public function verificaDuplicidadeDeAvaliacao(int $usuarioId): bool
+    {
+        return !!$this->avaliacoes()->where("avaliador_id", $usuarioId)->first();
+    }
 }

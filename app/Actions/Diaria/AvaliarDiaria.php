@@ -7,6 +7,7 @@ use App\Tarefas\Usuario\AtualizaReputacao;
 use App\Verificadores\Diaria\ValidaStatusDiaria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\ValidationException;
 
 class AvaliarDiaria
 {
@@ -20,8 +21,26 @@ class AvaliarDiaria
     {
         Gate::authorize("dono-diaria", $diaria);
         $this->validaStatusDiaria->executar($diaria, 4);
+        $this->verificaDuplicidadeDeAvaliacao($diaria);
         $this->criaAvaliacao($diaria, $dadosAvaliacao);
         $this->atualizaReputacao->executar($this->obtemUsuarioAvaliadoId($diaria));
+    }
+
+    /**
+     * Verifica se o usuário logado já avaliou a diária
+     *
+     * @param Diaria $diaria
+     * @return void
+     */
+    private function verificaDuplicidadeDeAvaliacao(Diaria $diaria): void
+    {
+        $usuarioLogado = Auth::user();
+        $usuarioJaAvaliou = $diaria->verificaDuplicidadeDeAvaliacao($usuarioLogado->id);
+        if ($usuarioJaAvaliou) {
+            throw ValidationException::withMessages([
+                "avaliador_id" => "O usuário já avaliou essa diária",
+            ]);
+        }
     }
 
     private function criaAvaliacao(Diaria $diaria, array $dadosAvaliacao)
