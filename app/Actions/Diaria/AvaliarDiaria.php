@@ -24,6 +24,7 @@ class AvaliarDiaria
         $this->verificaDuplicidadeDeAvaliacao($diaria);
         $this->criaAvaliacao($diaria, $dadosAvaliacao);
         $this->atualizaReputacao->executar($this->obtemUsuarioAvaliadoId($diaria));
+        $this->defineStatusAvaliado($diaria);
     }
 
     /**
@@ -65,5 +66,20 @@ class AvaliarDiaria
             return $diaria->diarista_id;
         }
         return $diaria->cliente_id;
+    }
+
+    /**
+     * Muda o status da diária para "avaliado" quando as duas partes fizerem a avaliação
+     *
+     * @param Diaria $diaria
+     * @return boolean
+     */
+    private function defineStatusAvaliado(Diaria $diaria): bool
+    {
+        $quantidadeAvaliacoes = $diaria->avaliacoes()->count();
+        if ($quantidadeAvaliacoes === 2) {
+            return $diaria->update(["status" => 6]);
+        }
+        return false;
     }
 }
