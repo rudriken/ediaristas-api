@@ -3,11 +3,12 @@
 namespace App\Actions\Diaria;
 
 use App\Models\Diaria;
-use App\Tarefas\Usuario\AtualizaReputacao;
-use App\Verificadores\Diaria\ValidaStatusDiaria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Model;
+use App\Tarefas\Usuario\AtualizaReputacao;
 use Illuminate\Validation\ValidationException;
+use App\Verificadores\Diaria\ValidaStatusDiaria;
 
 class AvaliarDiaria
 {
@@ -17,7 +18,14 @@ class AvaliarDiaria
     ) {
     }
 
-    public function executar(Diaria $diaria, array $dadosAvaliacao)
+    /**
+     * Define a avaliação do(a) usuário logado para a diária
+     *
+     * @param Diaria $diaria
+     * @param array $dadosAvaliacao
+     * @return void
+     */
+    public function executar(Diaria $diaria, array $dadosAvaliacao): void
     {
         Gate::authorize("dono-diaria", $diaria);
         $this->validaStatusDiaria->executar($diaria, 4);
@@ -44,7 +52,14 @@ class AvaliarDiaria
         }
     }
 
-    private function criaAvaliacao(Diaria $diaria, array $dadosAvaliacao)
+    /**
+     * Cria uma avaliação para a diária
+     *
+     * @param Diaria $diaria
+     * @param array $dadosAvaliacao
+     * @return Model
+     */
+    private function criaAvaliacao(Diaria $diaria, array $dadosAvaliacao): Model
     {
         return $diaria->avaliacoes()->create($dadosAvaliacao + [
             "visibilidade" => 1,

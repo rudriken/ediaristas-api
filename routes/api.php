@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Diaria\AvaliaDiaria;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Diaria\PagaDiaria;
+use App\Http\Controllers\Diaria\AvaliaDiaria;
 use App\Http\Controllers\Diaria\Oportunidades;
 use App\Http\Controllers\Servico\ObtemServicos;
 use App\Http\Controllers\Diaria\ConfirmaPresenca;
