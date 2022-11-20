@@ -611,7 +611,7 @@ paths:
         patch:
             operationId: confirmarPresenca
             tags:
-                 - Diárias
+                - Diárias
             description: Confirmar a presença do(a) diarista para a diária
             parameters:
                 - name: diaria
@@ -624,6 +624,58 @@ paths:
             responses:
                 "200":
                     description: Confirmação de presença do(a) diarista realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias/{diaria}/avaliacoes:
+        patch:
+            operationId: avaliarDiaria
+            tags:
+                - Diárias
+            description: Cadastra uma avaliação para a diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser avaliada
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/AvaliacaoRequest"
+            responses:
+                "200":
+                    description: Avaliação cadastrada com sucesso
                     content:
                         "application/json":
                             schema:
@@ -1253,6 +1305,21 @@ components:
                 foto_avaliador:
                     type: string
                     format: uri
+        AvaliacaoRequest:
+            type: object
+            required:
+                - descricao
+                - nota
+            properties:
+                descricao:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+                nota:
+                    type: number
+                    format: double
+                    minimum: 0
+                    maximum: 5
     securitySchemes:
         JWT:
             type: http
