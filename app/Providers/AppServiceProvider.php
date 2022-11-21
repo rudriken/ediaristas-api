@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
             return new GoogleMatrix($licenca);
         });
         $this->app->singleton(PagamentoInterface::class, function () {
-            $pagarmeSDK = new Client(config("services/pagarme/key"));
+            $pagarmeSDK = new Client(config("services.pagarme.key"));
             return new Pagarme($pagarmeSDK);
         });
     }
