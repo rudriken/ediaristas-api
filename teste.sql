@@ -1,1 +1,5 @@
-UPDATE ediaristas_temp.diarias SET status = 4 WHERE (id = 61);
+SELECT
+    id, data_atendimento, `status`, preco, valor_comissao,
+    cliente_id, diarista_id, servico_id
+    FROM ediaristas_temp.diarias
+	WHERE id = 9;
