@@ -61,11 +61,18 @@ class PagarDiaria
         Diaria $diaria,
         string $cardHash
     ): TransacaoResponse {
-        return $this->pagamento->pagar([
-            "amount" => intval($diaria->preco * 100),
-            "card_hash" => $cardHash,
-            "async" => false,
-        ]);
+        try {
+            $transacao = $this->pagamento->pagar([
+                "amount" => intval($diaria->preco * 100),
+                "card_hash" => $cardHash,
+                "async" => false,
+            ]);
+        } catch (\Throwable $excecao) {
+            throw ValidationException::withMessages([
+                "pagamento" => $excecao->getMessage(),
+            ]);
+        }
+        return $transacao;
     }
 
     /**
