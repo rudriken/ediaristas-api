@@ -2,9 +2,9 @@
 
 namespace App\Servicos\Pagamento\Provedores;
 
-use App\Servicos\Pagamento\PagamentoInterface;
-use App\Servicos\Pagamento\TransacaoResponse;
 use PagarMe\Client;
+use App\Servicos\Pagamento\TransacaoResponse;
+use App\Servicos\Pagamento\PagamentoInterface;
 
 class Pagarme implements PagamentoInterface
 {
@@ -12,6 +12,12 @@ class Pagarme implements PagamentoInterface
     {
     }
 
+    /**
+     * Realiza a transação com o Gateway de pagamento 'Pagarme'
+     *
+     * @param array $dados
+     * @return TransacaoResponse
+     */
     public function pagar(array $dados): TransacaoResponse
     {
         $transacao = $this->pagarmeSDK->transactions()->create($dados);
