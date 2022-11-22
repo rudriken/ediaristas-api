@@ -37,6 +37,12 @@ class PagarDiaria
             "async" => false,
         ]);
 
+        $diaria->pagamentos()->create([
+            "status"        => $transacao->transacaoStatus === "paid" ? "pago" : "reprovado",
+            "transacao_id"  => $transacao->transacaoId,
+            "valor"         => $diaria->preco
+        ]);
+
         if ($transacao->transacaoStatus !== "paid") {
             throw ValidationException::withMessages([
                 "pagamento" => "Pagamento Reprovado"

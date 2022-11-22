@@ -70,6 +70,16 @@ class Diaria extends Model
     }
 
     /**
+     * Define a relação de uma diária com os pagamentos
+     *
+     * @return HasMany
+     */
+    public function pagamentos(): HasMany
+    {
+        return $this->hasMany(Pagamento::class);
+    }
+
+    /**
      * Define o status da diária como pago
      *
      * @return boolean
