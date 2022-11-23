@@ -182,10 +182,26 @@ class Diaria extends Model
         return !!$this->avaliacoes()->where("avaliador_id", $usuarioId)->first();
     }
 
+    /**
+     * Retorna as diárias com menos de 24 horas para atendimento e sem diarista definido(a)
+     *
+     * @return Collection<self>
+     */
     static public function comMenosDe24HorasParaAtendimentoSemDiarista(): Collection
     {
         return self::where("status", "2")
             ->whereDate("data_atendimento", "<", Carbon::now()->addHours(24)->toISOString())
             ->get();
+    }
+
+    /**
+     * Define o status "cancelado" para uma diária
+     *
+     * @return void
+     */
+    public function cancelar(): void
+    {
+        $this->status = 5;
+        $this->save();
     }
 }
