@@ -3,8 +3,8 @@
 namespace App\Tarefas\Pagamento;
 
 use App\Models\Diaria;
-use App\Servicos\Pagamento\PagamentoInterface;
 use App\Servicos\Pagamento\TransacaoResponse;
+use App\Servicos\Pagamento\PagamentoInterface;
 use Illuminate\Validation\ValidationException;
 
 class EstornarPagamentoCliente

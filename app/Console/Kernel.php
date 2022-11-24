@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command("diarias:selecionar:diaristas")->everyFiveMinutes();
+        $schedule->command("diarias:cancelar:sem-diarista")->everyFiveMinutes();
     }
 
     /**

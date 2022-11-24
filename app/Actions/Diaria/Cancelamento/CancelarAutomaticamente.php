@@ -7,11 +7,18 @@ use App\Tarefas\Pagamento\EstornarPagamentoCliente;
 
 class CancelarAutomaticamente
 {
-    public function __construct(private EstornarPagamentoCliente $estornarPagamentoCliente)
-    {
+    public function __construct(
+        private EstornarPagamentoCliente $estornarPagamentoCliente
+    ) {
     }
 
-    public function executar()
+    /**
+     * Cancela automaticamente as diárias pagas com menos de 24 horas para o atendimento e
+     * que não possuem diarista para realizar o serviço
+     *
+     * @return void
+     */
+    public function executar(): void
     {
         $diarias = Diaria::comMenosDe24HorasParaAtendimentoSemDiarista();
         foreach ($diarias as $diaria) {
