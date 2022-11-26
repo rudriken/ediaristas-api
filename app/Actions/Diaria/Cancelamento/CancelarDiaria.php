@@ -14,11 +14,12 @@ class CancelarDiaria
     {
     }
 
-    public function executar(Diaria $diaria)
+    public function executar(Diaria $diaria, string $motivoCancelamento)
     {
         $this->validaStatusDiaria->executar($diaria, [2, 3]);
         $this->verificaDataAtendimento($diaria->data_atendimento);
         Gate::authorize("dono-diaria", $diaria);
+        $diaria->cancelar($motivoCancelamento);
         dd("diária cancelada com sucesso!");
     }
 

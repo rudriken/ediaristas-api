@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Diaria;
 use App\Actions\Diaria\Cancelamento\CancelarDiaria;
 use App\Http\Controllers\Controller;
 use App\Models\Diaria;
+use Illuminate\Http\Request;
 
 class CancelaDiaria extends Controller
 {
@@ -19,8 +20,9 @@ class CancelaDiaria extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Diaria $diaria)
+    public function __invoke(Diaria $diaria, Request $requisicao)
     {
-        $this->cancelarDiaria->executar($diaria);
+        $requisicao->validate(["motivo_cancelamento" => ["required", "string"]]);
+        $this->cancelarDiaria->executar($diaria, $requisicao->motivo_cancelamento);
     }
 }

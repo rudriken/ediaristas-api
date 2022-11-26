@@ -199,9 +199,10 @@ class Diaria extends Model
      *
      * @return void
      */
-    public function cancelar(): void
+    public function cancelar(string $motivoCancelamento = null): void
     {
         $this->status = 5;
+        $this->motivo_cancelamento = $motivoCancelamento;
         $this->save();
     }
 
