@@ -1,4 +1,1 @@
-SELECT
-    id, data_atendimento, `status`, motivo_cancelamento, cliente_id, diarista_id
-    FROM ediaristas_temp.diarias
-    WHERE id = 62;
+UPDATE ediaristas_temp.diarias SET `status` = '3' WHERE (id = '62');
