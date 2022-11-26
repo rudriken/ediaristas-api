@@ -1,1 +1,3 @@
-UPDATE ediaristas_temp.diarias SET `status` = '3' WHERE (id = '62');
+SELECT id, nome_completo, nascimento, tipo_usuario, email, reputacao
+    FROM ediaristas_temp.users
+    WHERE id = 19;

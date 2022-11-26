@@ -3,6 +3,7 @@
 namespace App\Actions\Diaria\Cancelamento;
 
 use App\Models\Diaria;
+use App\Tarefas\Usuario\AtualizaReputacao;
 use App\Verificadores\Diaria\ValidaStatusDiaria;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -11,8 +12,10 @@ use Illuminate\Validation\ValidationException;
 
 class CancelarDiaria
 {
-    public function __construct(private ValidaStatusDiaria $validaStatusDiaria)
-    {
+    public function __construct(
+        private ValidaStatusDiaria $validaStatusDiaria,
+        private AtualizaReputacao $atualizaReputacao
+    ) {
     }
 
     public function executar(Diaria $diaria, string $motivoCancelamento)
@@ -45,12 +48,10 @@ class CancelarDiaria
         $tipoUsuario = Auth::user()->tipo_usuario;
 
         if ($tipoUsuario == "2") {
-            // fazer uma ação
+            return $this->penalizacaoDiarista($diaria, $naoTemPenalidade);
         }
 
         // fazer o reenbolso
-
-        dd($naoTemPenalidade);
     }
 
     private function verificaSeNaoTemPenalizacao(string $dataAtendimento): bool
@@ -58,5 +59,21 @@ class CancelarDiaria
         $dataAtendimento = new Carbon($dataAtendimento);
         $diferencaEmHoras = Carbon::now()->diffInHours($dataAtendimento, false);
         return $diferencaEmHoras > 24;
+    }
+
+    private function penalizacaoDiarista(Diaria $diaria, bool $naoTemPenalidade)
+    {
+        if ($naoTemPenalidade) {
+            return;
+        }
+        $usuarioLogadoId = Auth::user()->id;
+        $diaria->avaliacoes()->create([
+            "visibilidade"  => 0,
+            "nota"          => 1,
+            "descricao"     => "penalização diária cancelada",
+            "diaria_id"     => $diaria->id,
+            "avaliado_id"   => $usuarioLogadoId,
+        ]);
+        $this->atualizaReputacao->executar($usuarioLogadoId);
     }
 }
