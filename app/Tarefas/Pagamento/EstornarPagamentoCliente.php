@@ -26,7 +26,7 @@ class EstornarPagamentoCliente
         $pagamento = $diaria->pagamentoValido();
         $transacao = $this->realizaEstornoNoGateway($pagamento->transacao_id, $valor);
         $this->guardaTransacaoNoBancoDeDados($diaria, $pagamento->transacao_id, $valor);
-        $this->validaStatusDoEstorno($transacao);
+        $this->validaStatusDoEstorno($transacao, $valor);
     }
 
     /**
@@ -81,9 +81,12 @@ class EstornarPagamentoCliente
      * @param TransacaoResponse $transacao
      * @return void
      */
-    private function validaStatusDoEstorno(TransacaoResponse $transacao): void
-    {
-        if ($transacao->transacaoStatus !== "refunded") {
+    private function validaStatusDoEstorno(
+        TransacaoResponse $transacao,
+        float $valorEstorno
+    ): void {
+        $valorEstorno = intval($valorEstorno * 100);
+        if ($transacao->valorEstornado !== $valorEstorno) {
             throw ValidationException::withMessages([
                 "pagamento" => "Não foi possível estornar o pagamento"
             ]);

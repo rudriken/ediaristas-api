@@ -33,6 +33,10 @@ class Pagarme implements PagamentoInterface
     public function estornar(array $dados): TransacaoResponse
     {
         $transacao = $this->pagarmeSDK->transactions()->refund($dados);
-        return new TransacaoResponse($transacao->id, $transacao->status);
+        return new TransacaoResponse(
+            $transacao->id,
+            $transacao->status,
+            $transacao->refunded_amount
+        );
     }
 }
