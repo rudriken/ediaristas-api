@@ -3,6 +3,7 @@
 namespace App\Actions\Diaria\Cancelamento;
 
 use App\Models\Diaria;
+use App\Tarefas\Pagamento\EstornarPagamentoCliente;
 use App\Tarefas\Usuario\AtualizaReputacao;
 use App\Verificadores\Diaria\ValidaStatusDiaria;
 use Carbon\Carbon;
@@ -14,7 +15,8 @@ class CancelarDiaria
 {
     public function __construct(
         private ValidaStatusDiaria $validaStatusDiaria,
-        private AtualizaReputacao $atualizaReputacao
+        private AtualizaReputacao $atualizaReputacao,
+        private EstornarPagamentoCliente $estornarPagamentoCliente
     ) {
     }
 
@@ -24,7 +26,7 @@ class CancelarDiaria
         $this->verificaDataAtendimento($diaria->data_atendimento);
         Gate::authorize("dono-diaria", $diaria);
         $diaria->cancelar($motivoCancelamento);
-        $this->pensalizacao($diaria);
+        $this->penalizacao($diaria);
         dd("diária cancelada com sucesso!");
     }
 
@@ -41,7 +43,7 @@ class CancelarDiaria
         }
     }
 
-    private function pensalizacao(Diaria $diaria)
+    private function penalizacao(Diaria $diaria)
     {
         // verificar se tem penalização
         $naoTemPenalidade = $this->verificaSeNaoTemPenalizacao($diaria->data_atendimento);
@@ -52,6 +54,7 @@ class CancelarDiaria
         }
 
         // fazer o reenbolso
+        $this->estornarPagamentoCliente->executar($diaria, $naoTemPenalidade);
     }
 
     private function verificaSeNaoTemPenalizacao(string $dataAtendimento): bool

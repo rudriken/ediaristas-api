@@ -1,3 +1,1 @@
-SELECT id, nome_completo, nascimento, tipo_usuario, email, reputacao
-    FROM ediaristas_temp.users
-    WHERE id = 19;
+SELECT * FROM ediaristas_temp.pagamentos WHERE id = 18;

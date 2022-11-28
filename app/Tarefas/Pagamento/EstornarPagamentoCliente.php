@@ -17,13 +17,15 @@ class EstornarPagamentoCliente
      * Realiza o estorno no Gateway de pagamento
      *
      * @param Diaria $diaria
+     * @param boolean $estornoCompleto
      * @return void
      */
-    public function executar(Diaria $diaria): void
+    public function executar(Diaria $diaria, bool $estornoCompleto = true): void
     {
+        $valor = $this->valor($diaria, $estornoCompleto);
         $pagamento = $diaria->pagamentoValido();
-        $transacao = $this->realizaEstornoNoGateway($pagamento->transacao_id);
-        $this->guardaTransacaoNoBancoDeDados($diaria, $pagamento->transacao_id);
+        $transacao = $this->realizaEstornoNoGateway($pagamento->transacao_id, $valor);
+        $this->guardaTransacaoNoBancoDeDados($diaria, $pagamento->transacao_id, $valor);
         $this->validaStatusDoEstorno($transacao);
     }
 
@@ -31,13 +33,18 @@ class EstornarPagamentoCliente
      * Chama o serviço para realizar o estorno no Gateway de pagamento
      *
      * @param integer $transacaoId
+     * @param float $valorEstorno
      * @return TransacaoResponse
      */
-    private function realizaEstornoNoGateway(int $transacaoId): TransacaoResponse
-    {
+    private function realizaEstornoNoGateway(
+        int $transacaoId,
+        float $valorEstorno
+    ): TransacaoResponse {
         try {
+            $valorEstorno = intval($valorEstorno * 100);
             $transacao = $this->pagamento->estornar([
                 "id" => $transacaoId,
+                "amount" => $valorEstorno,
             ]);
         } catch (\Throwable $erro) {
             throw ValidationException::withMessages([
@@ -53,14 +60,18 @@ class EstornarPagamentoCliente
      *
      * @param Diaria $diaria
      * @param integer $transacaoId
+     * @param float $valorEstorno
      * @return void
      */
-    private function guardaTransacaoNoBancoDeDados(Diaria $diaria, int $transacaoId): void
-    {
+    private function guardaTransacaoNoBancoDeDados(
+        Diaria $diaria,
+        int $transacaoId,
+        float $valorEstorno
+    ): void {
         $diaria->pagamentos()->create([
             "status" => "estornado",
             "transacao_id" => $transacaoId,
-            "valor" => $diaria->preco
+            "valor" => $valorEstorno,
         ]);
     }
 
@@ -77,5 +88,17 @@ class EstornarPagamentoCliente
                 "pagamento" => "Não foi possível estornar o pagamento"
             ]);
         }
+    }
+
+    /**
+     * Retorna o valor do estorno
+     *
+     * @param Diaria $diaria
+     * @param boolean $estornoCompleto
+     * @return float
+     */
+    private function valor(Diaria $diaria, bool $estornoCompleto): float
+    {
+        return $estornoCompleto ? $diaria->preco : $diaria->preco / 2;
     }
 }
