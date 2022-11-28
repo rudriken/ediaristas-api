@@ -20,17 +20,29 @@ class CancelarDiaria
     ) {
     }
 
-    public function executar(Diaria $diaria, string $motivoCancelamento)
+    /**
+     * Realiza o cancelamento de uma diária
+     *
+     * @param Diaria $diaria
+     * @param string $motivoCancelamento
+     * @return void
+     */
+    public function executar(Diaria $diaria, string $motivoCancelamento): void
     {
         $this->validaStatusDiaria->executar($diaria, [2, 3]);
         $this->verificaDataAtendimento($diaria->data_atendimento);
         Gate::authorize("dono-diaria", $diaria);
         $diaria->cancelar($motivoCancelamento);
         $this->penalizacao($diaria);
-        dd("diária cancelada com sucesso!");
     }
 
-    private function verificaDataAtendimento(string $dataAtendimento)
+    /**
+     * Verifica se já não passou da data de atendimento no momento do cancelamento da diária
+     *
+     * @param string $dataAtendimento
+     * @return void
+     */
+    private function verificaDataAtendimento(string $dataAtendimento): void
     {
         $dataAtendimento = new Carbon($dataAtendimento);
         $agora = Carbon::now();
@@ -43,20 +55,33 @@ class CancelarDiaria
         }
     }
 
-    private function penalizacao(Diaria $diaria)
+    /**
+     * Define a penalização para o usuário dos tipos 'cliente' ou 'diarista'
+     *
+     * @param Diaria $diaria
+     * @return void
+     */
+    private function penalizacao(Diaria $diaria): void
     {
         // verificar se tem penalização
         $naoTemPenalidade = $this->verificaSeNaoTemPenalizacao($diaria->data_atendimento);
         $tipoUsuario = Auth::user()->tipo_usuario;
 
         if ($tipoUsuario == "2") {
-            return $this->penalizacaoDiarista($diaria, $naoTemPenalidade);
+            $this->penalizacaoDiarista($diaria, $naoTemPenalidade);
+            return;
         }
 
         // fazer o reenbolso
         $this->estornarPagamentoCliente->executar($diaria, $naoTemPenalidade);
     }
 
+    /**
+     * Verifica pela data de atendimento se tem ou não penalização.
+     *
+     * @param string $dataAtendimento
+     * @return boolean
+     */
     private function verificaSeNaoTemPenalizacao(string $dataAtendimento): bool
     {
         $dataAtendimento = new Carbon($dataAtendimento);
@@ -64,7 +89,14 @@ class CancelarDiaria
         return $diferencaEmHoras > 24;
     }
 
-    private function penalizacaoDiarista(Diaria $diaria, bool $naoTemPenalidade)
+    /**
+     * Verifica se tem penalização para o(a) diarista, e se tiver, penaliza.
+     *
+     * @param Diaria $diaria
+     * @param boolean $naoTemPenalidade
+     * @return void
+     */
+    private function penalizacaoDiarista(Diaria $diaria, bool $naoTemPenalidade): void
     {
         if ($naoTemPenalidade) {
             return;
