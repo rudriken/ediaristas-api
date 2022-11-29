@@ -79,6 +79,7 @@ class EstornarPagamentoCliente
      * Valida se o status da transação está correto para o estorno
      *
      * @param TransacaoResponse $transacao
+     * @param float $valorEstorno
      * @return void
      */
     private function validaStatusDoEstorno(

@@ -12,7 +12,7 @@ class ValidaStatusDiaria
      * Verifica o status de uma diária
      *
      * @param Diaria $diaria
-     * @param integer $status
+     * @param integer|array $status
      * @return void
      */
     public function executar(Diaria $diaria, int|array $status): void

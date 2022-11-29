@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Diaria;
 
-use App\Actions\Diaria\Cancelamento\CancelarDiaria;
-use App\Http\Controllers\Controller;
 use App\Models\Diaria;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Actions\Diaria\Cancelamento\CancelarDiaria;
 
 class CancelaDiaria extends Controller
 {
