@@ -69,7 +69,7 @@ class CancelarDiaria
 
         if ($tipoUsuario == "2") {
             $this->penalizacaoDiarista($diaria, $naoTemPenalidade);
-            return;
+            $naoTemPenalidade = true;
         }
 
         // fazer o reenbolso
