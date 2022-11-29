@@ -20,6 +20,7 @@ class Diaria extends HateoasBase implements HateoasInterface
         $this->linkPagar($diaria);
         $this->linkConfirmar($diaria);
         $this->linkAvaliar($diaria);
+        $this->linkCancelar($diaria);
         return $this->links;
     }
 
@@ -87,6 +88,27 @@ class Diaria extends HateoasBase implements HateoasInterface
                 "PATCH",
                 "avaliar_diaria",
                 "diarias.avaliar",
+                ["diaria" => $diaria->id]
+            );
+        }
+    }
+
+    /**
+     * Adiciona o link para cancelar a diária
+     *
+     * @param Model $diaria
+     * @return void
+     */
+    private function linkCancelar(Model $diaria): void
+    {
+        $antesDataAtendimento = Carbon::now() < Carbon::parse($diaria->data_atendimento);
+        $diariaPagaOuConfirmada = $diaria->status == 2 || $diaria->status == 3;
+
+        if ($antesDataAtendimento && $diariaPagaOuConfirmada) {
+            $this->adicionaLink(
+                "PATCH",
+                "cancelar_diaria",
+                "diarias.cancelar",
                 ["diaria" => $diaria->id]
             );
         }
