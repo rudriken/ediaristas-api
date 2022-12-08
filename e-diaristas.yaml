@@ -706,6 +706,58 @@ paths:
                                 $ref: "#/components/schemas/ErrorResponse"
             security:
                 - JWT: []
+    /api/diarias/{diaria}/cancelado:
+        patch:
+            operationId: CancelarDiaria
+            tags:
+                - Diárias
+            description: Realiza o cancelamento de uma diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser cancelada
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/CancelarDiariaRequest"
+            responses:
+                "200":
+                    description: Diária cancelada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
     /api/oportunidades:
         get:
             operationId: getOportunidades
@@ -1320,6 +1372,15 @@ components:
                     format: double
                     minimum: 0
                     maximum: 5
+        CancelarDiariaRequest:
+            type: object
+            required:
+                - motivo_cancelamento
+            properties:
+                motivo_cancelamento:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
     securitySchemes:
         JWT:
             type: http
