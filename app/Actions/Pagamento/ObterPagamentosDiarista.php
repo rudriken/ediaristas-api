@@ -5,15 +5,20 @@ namespace App\Actions\Pagamento;
 use App\Models\Diaria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Collection;
 
 class ObterPagamentosDiarista
 {
-    public function executar()
+
+    /**
+     * Retorna a lista de diárias como pagamento do(a) diarista
+     *
+     * @return Collection
+     */
+    public function executar(): Collection
     {
         Gate::authorize("tipo-diarista");
         $diarista = Auth::user();
-        return Diaria::where("diarista_id", $diarista->id)
-            ->whereIn("status", [4, 6, 7])
-            ->get();
+        return Diaria::pagamentosDiarista($diarista);
     }
 }

@@ -16,8 +16,8 @@ use App\Http\Controllers\Diarista\ObtemDiaristasPorCEP;
 use App\Http\Controllers\Usuario\AutenticacaoController;
 use App\Http\Controllers\Diarista\DefineCidadesAtendidas;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
-use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
 use App\Http\Controllers\Pagamento\ObtemPagamentosDiarista;
+use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
 
 Route::get("/", IndexController::class);
 
