@@ -19,6 +19,7 @@ tags:
     - name: Usuários
     - name: Diaristas
     - name: Endereços
+    - name: Pagamentos
     - name: Autenticação
     - name: Oportunidades
 paths:
@@ -787,6 +788,35 @@ paths:
                                 $ref: "#/components/schemas/ErrorResponse"
             security:
                 - JWT: []
+    /api/pagamentos:
+        get:
+            operationId: getPagamentos
+            tags:
+                - Pagamentos
+            description: Lista os pagamentos recebidos e a receber do(a) diarista logado
+            responses:
+                "200":
+                    description: Listagem de pagamentos realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/PagamentoResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
 components:
     schemas:
         DiaristaLocalidadePageResponse:
@@ -1381,6 +1411,25 @@ components:
                     type: string
                     minLength: 3
                     maxLength: 255
+        PagamentoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                status:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                valor_deposito:
+                    type: number
+                    format: double
+                valor:
+                    type: number
+                    format: double
+                created_at:
+                    type: string
+                    format: date-time
     securitySchemes:
         JWT:
             type: http
