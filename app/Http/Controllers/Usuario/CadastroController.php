@@ -8,6 +8,7 @@ use App\Http\Resources\Usuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Actions\Usuario\CriarUsuario;
+use App\Http\Requests\UsuarioAlteracaoRequest;
 use App\Http\Requests\UsuarioCadastroRequest;
 
 class CadastroController extends Controller
@@ -46,8 +47,8 @@ class CadastroController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UsuarioAlteracaoRequest $requisicao)
     {
-        $this->atualizarUsuario->executar();
+        $this->atualizarUsuario->executar($requisicao->all());
     }
 }

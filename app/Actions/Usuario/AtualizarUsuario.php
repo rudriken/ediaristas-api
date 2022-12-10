@@ -4,8 +4,8 @@ namespace App\Actions\Usuario;
 
 class AtualizarUsuario
 {
-    public function executar()
+    public function executar(array $dados)
     {
-        dd("cheguei na Action 'AtualizarUsuario'.");
+        dd($dados);
     }
 }
