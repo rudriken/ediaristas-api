@@ -17,6 +17,7 @@ class Usuario extends HateoasBase implements HateoasInterface
     {
         $this->adicionaLink("GET", "lista_diarias", "diarias.index");
         $this->adicionaLink("PUT", "editar_usuario", "usuarios.update");
+        $this->adicionaLink("POST", "alterar_foto_usuario", "usuarios.definir-foto");
         $this->linksDoCliente($usuario);
         $this->linksDoDiarista($usuario);
         return $this->links;

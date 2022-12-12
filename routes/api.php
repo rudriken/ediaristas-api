@@ -32,7 +32,7 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::get("/diarias/{diaria}", [DiariaCadastroController::class, "show"])
         ->name("diarias.show");
     Route::put("/usuarios", [CadastroController::class, "update"])->name("usuarios.update");
-    Route::post("usuarios/foto", DefineFotoPerfil::class)->name("usuario.definir_foto");
+    Route::post("usuarios/foto", DefineFotoPerfil::class)->name("usuarios.definir-foto");
     Route::put("/usuarios/endereco", DefineEndereco::class)
         ->name("usuarios.definir-endereco");
     Route::put("/usuarios/cidades-atendidas", DefineCidadesAtendidas::class)
