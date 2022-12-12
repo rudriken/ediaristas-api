@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Usuario;
 
 use App\Actions\Usuario\AtualizarUsuario;
-use Illuminate\Http\Request;
 use App\Http\Resources\Usuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -22,12 +21,6 @@ class CadastroController extends Controller
         $this->atualizarUsuario = $acao2;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(UsuarioCadastroRequest $request)
     {
         $usuario = $this->criarUsuario->executar(
@@ -41,14 +34,9 @@ class CadastroController extends Controller
         return new Usuario($usuario, $token);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function update(UsuarioAlteracaoRequest $requisicao)
     {
-        $this->atualizarUsuario->executar($requisicao->all());
+        $this->atualizarUsuario->executar($requisicao->except("password_confirmation"));
+        return resposta_padrao(200, "sucesso", "Usuário atualizado com sucesso");
     }
 }
