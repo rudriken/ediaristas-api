@@ -49,6 +49,7 @@ class Usuario extends HateoasBase implements HateoasInterface
             $this->adicionaLink("PUT", "relacionar_cidades", "usuarios.definir-cidades");
             $this->adicionaLink("GET", "lista_oportunidades", "oportunidades.index");
             $this->adicionaLink("GET", "lista_pagamentos", "pagamentos.index");
+            $this->adicionaLink("GET", "cidades_atendidas", "usuarios.obter-cidades");
         }
     }
 }
