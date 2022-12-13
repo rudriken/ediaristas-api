@@ -21,7 +21,7 @@ class UsuarioSimplificado extends JsonResource
             "telefone"      => $this->telefone,
             "reputacao"     => $this->reputacao,
             "tipo_usuario"  => $this->tipo_usuario,
-            "foto_usuario"  => "",
+            "foto_usuario"  => foto_perfil($this->foto_usuario),
         ];
     }
 }

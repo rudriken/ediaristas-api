@@ -18,7 +18,7 @@ class Avaliacao extends JsonResource
             "descricao" => $this->descricao,
             "nota" => $this->nota,
             "nome_avaliador" => $this->avaliador->nome_completo,
-            "foto_avaliador" => null,
+            "foto_avaliador" => foto_perfil($this->avaliador->foto_usuario),
         ];
     }
 }

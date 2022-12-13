@@ -212,7 +212,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'DistanceMatrix' =>
-            \TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix::class,
+        \TeamPickr\DistanceMatrix\Frameworks\Laravel\DistanceMatrix::class,
     ])->toArray(),
 
 ];
