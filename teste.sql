@@ -1,1 +1,3 @@
-SELECT * FROM ediaristas_temp.cidades WHERE id in (6, 18, 1);
+SELECT id, logradouro, numero, complemento, bairro, cidade, estado, cep, user_id
+	FROM ediaristas_temp.enderecos
+    WHERE user_id = 29;

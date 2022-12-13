@@ -19,6 +19,7 @@ use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 use App\Http\Controllers\Pagamento\ObtemPagamentosDiarista;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
 use App\Http\Controllers\Diarista\ObtemCidadesAtendidas;
+use App\Http\Controllers\Diarista\ObtemEndereco;
 use App\Http\Controllers\Usuario\DefineFotoPerfil;
 
 Route::get("/", IndexController::class);
@@ -36,6 +37,7 @@ Route::group(["middleware" => "auth:api"], function () {
     Route::post("usuarios/foto", DefineFotoPerfil::class)->name("usuarios.definir-foto");
     Route::put("/usuarios/endereco", DefineEndereco::class)
         ->name("usuarios.definir-endereco");
+    Route::get("/usuarios/endereco", ObtemEndereco::class)->name("usuarios.obter-endereco");
     Route::put("/usuarios/cidades-atendidas", DefineCidadesAtendidas::class)
         ->name("usuarios.definir-cidades");
     Route::get("/usuarios/cidades-atendidas", ObtemCidadesAtendidas::class)
