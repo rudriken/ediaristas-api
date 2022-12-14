@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Usuario;
 
-use App\Actions\Usuario\AtualizarUsuario;
 use App\Http\Resources\Usuario;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use App\Actions\Usuario\CriarUsuario;
-use App\Http\Requests\UsuarioAlteracaoRequest;
+use App\Actions\Usuario\AtualizarUsuario;
 use App\Http\Requests\UsuarioCadastroRequest;
+use App\Http\Requests\UsuarioAlteracaoRequest;
 
 class CadastroController extends Controller
 {
@@ -21,7 +22,13 @@ class CadastroController extends Controller
         $this->atualizarUsuario = $acao2;
     }
 
-    public function store(UsuarioCadastroRequest $request)
+    /**
+     * Cria um usuário no sistema
+     *
+     * @param UsuarioCadastroRequest $request
+     * @return Usuario
+     */
+    public function store(UsuarioCadastroRequest $request): Usuario
     {
         $usuario = $this->criarUsuario->executar(
             $request->except("password_confirmation"),
@@ -34,7 +41,13 @@ class CadastroController extends Controller
         return new Usuario($usuario, $token);
     }
 
-    public function update(UsuarioAlteracaoRequest $requisicao)
+    /**
+     * Atualiza os dados do usuário
+     *
+     * @param UsuarioAlteracaoRequest $requisicao
+     * @return JsonResponse
+     */
+    public function update(UsuarioAlteracaoRequest $requisicao): JsonResponse
     {
         $this->atualizarUsuario->executar($requisicao->except("password_confirmation"));
         return resposta_padrao(200, "sucesso", "Usuário atualizado com sucesso");

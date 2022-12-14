@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Diarista;
 
-use App\Actions\Diarista\ObterEndereco;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Actions\Diarista\ObterEndereco;
 
 class ObtemEndereco extends Controller
 {
@@ -11,7 +12,12 @@ class ObtemEndereco extends Controller
     {
     }
 
-    public function __invoke()
+    /**
+     * Obtém o endereço do(a) diarista
+     *
+     * @return Response
+     */
+    public function __invoke(): Response
     {
         $endereco = $this->obterEndereco->executar();
         return response($endereco, 200);

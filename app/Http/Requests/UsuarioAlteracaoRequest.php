@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Rules\IdadeMinima;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UsuarioAlteracaoRequest extends FormRequest
 {
@@ -21,9 +21,9 @@ class UsuarioAlteracaoRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $usuarioLogado = Auth::user();
         $regras = [

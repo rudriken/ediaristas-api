@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Diarista;
 
-use App\Actions\Diarista\ObterCidadesAtendidas;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Actions\Diarista\ObterCidadesAtendidas;
 
 class ObtemCidadesAtendidas extends Controller
 {
@@ -13,12 +13,11 @@ class ObtemCidadesAtendidas extends Controller
     }
 
     /**
-     * Handle the incoming request.
+     * Obtém a lista de cidades atendidas pelo(a) diarista
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(): Response
     {
         $cidadesAtendidas = $this->obterCidadesAtendidas->executar();
         return response($cidadesAtendidas, 200);

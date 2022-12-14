@@ -7,20 +7,20 @@ use App\Http\Controllers\Diaria\AvaliaDiaria;
 use App\Http\Controllers\Diaria\Oportunidades;
 use App\Http\Controllers\Diaria\CancelaDiaria;
 use App\Http\Controllers\Servico\ObtemServicos;
+use App\Http\Controllers\Diarista\ObtemEndereco;
 use App\Http\Controllers\Diaria\ConfirmaPresenca;
 use App\Http\Controllers\Diarista\DefineEndereco;
+use App\Http\Controllers\Usuario\DefineFotoPerfil;
 use App\Http\Controllers\Diaria\CandidataDiarista;
 use App\Http\Controllers\Usuario\CadastroController;
 use App\Http\Controllers\Endereco\BuscaCepApiExterna;
 use App\Http\Controllers\Diarista\ObtemDiaristasPorCEP;
+use App\Http\Controllers\Diarista\ObtemCidadesAtendidas;
 use App\Http\Controllers\Usuario\AutenticacaoController;
 use App\Http\Controllers\Diarista\DefineCidadesAtendidas;
 use App\Http\Controllers\Diarista\VerificaDisponibilidade;
 use App\Http\Controllers\Pagamento\ObtemPagamentosDiarista;
 use App\Http\Controllers\Diaria\CadastroController as DiariaCadastroController;
-use App\Http\Controllers\Diarista\ObtemCidadesAtendidas;
-use App\Http\Controllers\Diarista\ObtemEndereco;
-use App\Http\Controllers\Usuario\DefineFotoPerfil;
 
 Route::get("/", IndexController::class);
 
@@ -54,7 +54,7 @@ Route::group(["middleware" => "auth:api"], function () {
         ->name("diarias.cancelar");
     Route::get("/pagamentos", ObtemPagamentosDiarista::class)->name("pagamentos.index");
 });
-/* ( . . . ) */
+
 Route::get("/diaristas/localidades", ObtemDiaristasPorCEP::class)
     ->name("diaristas.busca_por_cep");
 Route::get("/diaristas/disponibilidade", VerificaDisponibilidade::class)

@@ -8,7 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class DefinirFotoPerfil
 {
-    public function executar(UploadedFile $fotoUsuario)
+
+    /**
+     * Define a foto do perfil do uusário
+     *
+     * @param UploadedFile $fotoUsuario
+     * @return boolean
+     */
+    public function executar(UploadedFile $fotoUsuario): bool
     {
         $login = Auth::user();
 
