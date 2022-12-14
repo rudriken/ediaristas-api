@@ -38,10 +38,10 @@ class UsuarioAlteracaoRequest extends FormRequest
             ],
         ];
 
-        if ($this->has("password")) {
+        if ($this->has("new_password")) {
             $regras = $regras + [
-                "password"              => ["required", "confirmed"],
-                "password_confirmation" => ["required"],
+                "new_password"          => ["required"],
+                "password_confirmation" => ["required", "same:new_password"],
             ];
         }
 

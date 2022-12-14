@@ -34,7 +34,7 @@ class Usuario extends JsonResource
             "reputacao"         => $this->reputacao,
             "tipo_usuario"      => $this->tipo_usuario,
             "foto_usuario"      => foto_perfil($this->foto_usuario),
-            "chave_pix"         => null,
+            "chave_pix"         => $this->chave_pix,
             "links"             => (new HateoasUsuario)->links($this->resource),
         ];
         if ($this->token !== "") {
