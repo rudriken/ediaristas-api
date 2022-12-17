@@ -165,6 +165,81 @@ paths:
                         "application/json":
                             schema:
                                 $ref: "#/components/schemas/ErrorResponse"
+        put:
+            operationId: putUsuario
+            tags:
+                - Usuários
+            description: Atualiza os dados cadastrais do usuário logado
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/UpdateUsuarioRequest"
+            responses:
+                "200":
+                    description: Atualização dos dados cadastrais realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/usuarios/foto:
+        post:
+            operationId: atualizarFoto
+            tags:
+                - Usuários
+            description: Atualiza a foto de perfil do usuário logado
+            requestBody:
+                content:
+                    "multipart/form-data":
+                        schema:
+                            $ref: "#/components/schemas/FotoRequest"
+            responses:
+                "200":
+                    description: Foto de perfil atualizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
     /api/usuarios/endereco:
         get:
             operationId: getUsuarioEndereco
@@ -1430,6 +1505,55 @@ components:
                 created_at:
                     type: string
                     format: date-time
+        UpdateUsuarioRequest:
+            type: object
+            required:
+                - nome_completo
+                - cpf
+                - nascimento
+                - telefone
+                - email
+            properties:
+                nome_completo:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+                cpf:
+                    type: string
+                    minLength: 11
+                    maxLength: 11
+                nascimento:
+                    type: string
+                    format: date
+                telefone:
+                    type: string
+                    minLength: 11
+                    maxLength: 11
+                email:
+                    type: string
+                    format: email
+                    maxLength: 255
+                chave_pix:
+                    type: string
+                    minLength: 11
+                    maxLength: 255
+                password:
+                    type: string
+                    format: password
+                new_password:
+                    type: string
+                    format: password
+                password_confirmation:
+                    type: string
+                    format: password
+        FotoRequest:
+            type: object
+            required:
+                - foto_usuario
+            properties:
+                foto_usuario:
+                    type: string
+                    format: binary
     securitySchemes:
         JWT:
             type: http
