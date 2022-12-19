@@ -68,3 +68,5 @@ Route::post("/usuarios", [CadastroController::class, "store"])
     ->name("usuarios.create");
 Route::post("/recuperar-senha", [ResetarSenhaController::class, "solicitarToken"])
     ->name("usuarios.solicitar_alteracao_senha");
+Route::post("/recuperar-senha/confirme", [ResetarSenhaController::class, "resetarSenha"])
+    ->name("usuarios.alterar_senha");
