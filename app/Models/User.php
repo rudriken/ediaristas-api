@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetarSenhaNotification;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -165,5 +166,11 @@ class User extends Authenticatable implements JWTSubject
     public function avaliado(): HasMany
     {
         return $this->hasMany(Avaliacao::class, "avaliado_id");
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = "http://localhost:3000/recuperar-senha?token=" . $token;
+        $this->notify(new ResetarSenhaNotification($url));
     }
 }

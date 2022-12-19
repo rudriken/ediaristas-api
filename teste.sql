@@ -1,3 +1,1 @@
-SELECT id, logradouro, numero, complemento, bairro, cidade, estado, cep, user_id
-	FROM ediaristas_temp.enderecos
-    WHERE user_id = 29;
+SELECT * FROM ediaristas_temp.password_resets;
