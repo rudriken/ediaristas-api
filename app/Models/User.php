@@ -170,7 +170,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function sendPasswordResetNotification($token)
     {
-        $url = "http://localhost:3000/recuperar-senha?token=" . $token;
+        $url = config("app.client_web_url") . "/recuperar-senha?token=" . $token;
         $this->notify(new ResetarSenhaNotification($url));
     }
 }
