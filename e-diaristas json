@@ -1,0 +1,1638 @@
+openapi: 3.0.1
+info:
+    title: E-Diaristas
+    description: API back-end da aplicação E-Diaristas desenvolvida durante a imersão Multi-stack da TreinaWeb
+    version: 1.0.0
+    contact:
+        name: TreinaWeb
+        url: https://www.treinaweb.com.br/contato
+        email: contato@treinaweb.com.br
+servers:
+    - url: http://localhost:8000
+      description: Aplicação Laravel Local
+    - url: https://ediaristas-api-php.herokuapp.com
+      description: Aplicação Laravel Heroku
+tags:
+    - name: Eu
+    - name: Api
+    - name: Diárias
+    - name: Usuários
+    - name: Diaristas
+    - name: Endereços
+    - name: Pagamentos
+    - name: Autenticação
+    - name: Oportunidades
+    - name: Recuperar Senha
+paths:
+    /api:
+        get:
+            operationId: getLinks
+            tags:
+                - Api
+            description: Exibe os links iniciais da aplicação
+            summary: home
+            responses:
+                "200":
+                    description: Exibição realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    links:
+                                        type: array
+                                        items:
+                                            $ref: "#/components/schemas/LinkResponse"
+    /api/diaristas/localidades:
+        get:
+            operationId: getDiaristasLocalidades
+            tags:
+                - Diaristas
+            description: Buscar diaristas que atendem uma determinada localidade
+            summary: busca diaristas
+            parameters:
+                - name: cep
+                  in: query
+                  required: true
+                  schema:
+                      type: string
+                  example: "38402039"
+            responses:
+                "200":
+                    description: Busca realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/DiaristaLocalidadePageResponse"
+                "400":
+                    description: CEP não informado ou inválido
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: CEP informado não encontrado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+    /api/diaristas/disponibilidade:
+        get:
+            operationId: getDisponibilidade
+            tags:
+                - Diaristas
+            description: Verificar a disponibilidade de diaristas por CEP
+            summary: verifica disponibilidade
+            parameters:
+                - name: cep
+                  in: query
+                  required: true
+                  schema:
+                      type: string
+                  example: "38402039"
+            responses:
+                "200":
+                    description: Verificação realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/DisponibilidadeResponse"
+                "400":
+                    description: CEP não informado ou inválido
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: CEP informado não encontrado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+    /api/enderecos:
+        get:
+            operationId: getEndereco
+            tags:
+                - Endereços
+            description: Buscar dados de um endereço por CEP
+            summary: busca endereço
+            parameters:
+                - name: cep
+                  in: query
+                  required: true
+                  schema:
+                      type: string
+                  example: "38402039"
+            responses:
+                "200":
+                    description: Busca realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/EnderecoResponse"
+                "400":
+                    description: CEP não informado ou inválido
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: CEP informado não encontrado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+    /api/usuarios:
+        post:
+            operationId: postUsuario
+            tags:
+                - Usuários
+            description: Cadastra um novo usuário
+            requestBody:
+                content:
+                    "multipart/form-data":
+                        schema:
+                            $ref: "#/components/schemas/CriarUsuarioRequest"
+            responses:
+                "201":
+                    description: Usuário cadastrado com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/CriarUsuarioResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+        put:
+            operationId: putUsuario
+            tags:
+                - Usuários
+            description: Atualiza os dados cadastrais do usuário logado
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/UpdateUsuarioRequest"
+            responses:
+                "200":
+                    description: Atualização dos dados cadastrais realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/usuarios/foto:
+        post:
+            operationId: atualizarFoto
+            tags:
+                - Usuários
+            description: Atualiza a foto de perfil do usuário logado
+            requestBody:
+                content:
+                    "multipart/form-data":
+                        schema:
+                            $ref: "#/components/schemas/FotoRequest"
+            responses:
+                "200":
+                    description: Foto de perfil atualizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/usuarios/endereco:
+        get:
+            operationId: getUsuarioEndereco
+            tags:
+                - Usuários
+            description: Exibe o endereço do usuário logado
+            responses:
+                "200":
+                    description: Endereço do usuário logado exibido com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/UsuarioEnderecoResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: O endereço do usuário logado não foi encontrado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+        put:
+            operationId: putUsuarioEndereco
+            tags:
+                - Usuários
+            description: Altera o endereço do usuário logado
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/UsuarioEnderecoRequest"
+            responses:
+                "200":
+                    description: Alteração de endereço realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/UsuarioEnderecoResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/usuarios/cidades-atendidas:
+        get:
+            operationId: getUsuarioCidadesAtendidas
+            tags:
+                - Usuários
+            description: Lista as cidades atendidas pelos usuáriu logado
+            responses:
+                "200":
+                    description: Listagem realizada com sucessp
+                    content:
+                        "application/json":
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/UsuarioCidadeAtendidaResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+        put:
+            operationId: putUsuarioCidadesAtendidas
+            tags:
+                - Usuários
+            description: Atualiza as cidades atendidas pelo usuário logado
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/UsuarioCidadesAtendidasRequest"
+            responses:
+                "200":
+                    description: Cidades atendidas pelo usuário logado atualizadas com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /autenticacao/token:
+        post:
+            operationId: token
+            tags:
+                - Autenticação
+            description: Autenticar com as credenciais do usuário
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/CredenciaisRequest"
+            responses:
+                "200":
+                    description: Autenticação realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/TokenResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Credenciais incorretas
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+    /autenticacao/token/atualizar:
+        post:
+            operationId: refresh
+            tags:
+                - Autenticação
+            description: Autentica com o refresh token
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/RefreshRequest"
+            responses:
+                "200":
+                    description: Autenticação realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/TokenResponse"
+                "400":
+                    description: "Houveram erros de validação"
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Refresh Token inválido
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+    /autenticacao/logout:
+        post:
+            operationId: Logout
+            tags:
+                - Autenticação
+            description: Realizar logout ao invalidar o refresh token
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/RefreshRequest"
+            responses:
+                "205":
+                    description: Logout realizado com sucesso
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "appication/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+    /api/eu:
+        get:
+            operationId: getEu
+            tags:
+                - Eu
+            description: Obter os dados do usuário logado
+            responses:
+                "200":
+                    description: Usuário logado obtido com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/EuResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias:
+        get:
+            operationId: getDiarias
+            tags:
+                - Diárias
+            description: Lista as diárias do usuário logado
+            responses:
+                "200":
+                    description: Listagem realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/DiariaResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+        post:
+            operationId: postDiaria
+            tags:
+                - Diárias
+            description: Cadastrar nova diária
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/DiariaRequest"
+            responses:
+                "201":
+                    description: Diária cadastrada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/DiariaResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias/{diaria}:
+        get:
+            operationId: getDiaria
+            tags:
+                - Diárias
+            description: Busca uma diária por ID
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser buscada
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                "200":
+                    description: Diária encontrada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/DiariaResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias/{diaria}/pagamentos:
+        post:
+            operationId: pagarDiaria
+            tags:
+                - Diárias
+            description: Realizar o pagamento de uma diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser paga
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/PagamentoRequest"
+            responses:
+                "200":
+                    description: Pagamento realizado com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias/{diaria}/candidatos:
+        post:
+            operationId: CandidatosDiaria
+            tags:
+                - Diárias
+            description: Realizar candidatura de diarista logado(a) para uma diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser disputada
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                "200":
+                    description: Candidatura realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias/{diaria}/presenca:
+        patch:
+            operationId: confirmarPresenca
+            tags:
+                - Diárias
+            description: Confirmar a presença do(a) diarista para a diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser confirmada presença do(a) diarista
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            responses:
+                "200":
+                    description: Confirmação de presença do(a) diarista realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias/{diaria}/avaliacoes:
+        patch:
+            operationId: avaliarDiaria
+            tags:
+                - Diárias
+            description: Cadastra uma avaliação para a diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser avaliada
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/AvaliacaoRequest"
+            responses:
+                "200":
+                    description: Avaliação cadastrada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/diarias/{diaria}/cancelado:
+        patch:
+            operationId: CancelarDiaria
+            tags:
+                - Diárias
+            description: Realiza o cancelamento de uma diária
+            parameters:
+                - name: diaria
+                  in: path
+                  description: ID da diária a ser cancelada
+                  required: true
+                  schema:
+                      type: integer
+                  example: 1
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/CancelarDiariaRequest"
+            responses:
+                "200":
+                    description: Diária cancelada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "404":
+                    description: Diária não encontrada
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/oportunidades:
+        get:
+            operationId: getOportunidades
+            tags:
+                - Oportunidades
+            description: Lista as oportunidades disponíveis para o(a) diarista logado(a)
+            responses:
+                "200":
+                    description: Oportunidades listadas com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/OportunidadeResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/pagamentos:
+        get:
+            operationId: getPagamentos
+            tags:
+                - Pagamentos
+            description: Lista os pagamentos recebidos e a receber do(a) diarista logado
+            responses:
+                "200":
+                    description: Listagem de pagamentos realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/PagamentoResponse"
+                "401":
+                    description: Usuário não está autenticado
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+                "403":
+                    description: Usuário autenticado não tem autorização para realizar esta operação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+            security:
+                - JWT: []
+    /api/recuperar-senha:
+        post:
+            operationId: solicitarResetSenha
+            tags:
+                - Recuperar Senha
+            description: Solcita o reset de senha de um usuário
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/ResetSenhaRequest"
+            responses:
+                "200":
+                    description: Reset solicitado com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+    /api/recuperar-senha/confirme:
+        post:
+            operationId: confirmarResetSenha
+            tags:
+                - Recuperar Senha
+            description: Confirma o reset de senha de um usuário
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/ConfirmeResetSenhaRequest"
+            responses:
+                "200":
+                    description: Confirmação de reset de senha realizada com sucesso
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MensagemResponse"
+                "400":
+                    description: Houveram erros de validação
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ErrorResponse"
+components:
+    schemas:
+        DiaristaLocalidadePageResponse:
+            type: object
+            properties:
+                diaristas:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/DiaristaLocalidadeResponse"
+                quantidade_diaristas:
+                    type: integer
+        DiaristaLocalidadeResponse:
+            type: object
+            properties:
+                nome_completo:
+                    type: string
+                reputacao:
+                    type: number
+                    format: double
+                foto_usuario:
+                    type: string
+                    format: url
+                cidade:
+                    type: string
+        ErrorResponse:
+            type: object
+            properties:
+                status:
+                    type: integer
+                timestamp:
+                    type: string
+                    format: date-time
+                message:
+                    type: string
+                erros:
+                    type: object
+                    additionalProperties:
+                        type: array
+                        items:
+                            type: string
+        EnderecoResponse:
+            type: object
+            properties:
+                cep:
+                    type: string
+                logradouro:
+                    type: string
+                complemento:
+                    type: string
+                bairro:
+                    type: string
+                localidade:
+                    type: string
+                uf:
+                    type: string
+                ibge:
+                    type: string
+        DisponibilidadeResponse:
+            type: object
+            properties:
+                disponibilidade:
+                    type: boolean
+        LinkResponse:
+            type: object
+            properties:
+                type:
+                    type: string
+                    enum:
+                        - GET
+                        - POST
+                        - PUT
+                        - PATCH
+                        - DELETE
+                rel:
+                    type: string
+                uri:
+                    type: string
+                    format: uri
+        CriarUsuarioRequest:
+            type: object
+            properties:
+                nome_completo:
+                    type: string
+                    minLength: 5
+                    maxLength: 255
+                cpf:
+                    type: string
+                    minLength: 11
+                    maxLength: 11
+                nascimento:
+                    type: string
+                    format: date
+                foto_documento:
+                    type: string
+                    format: binary
+                telefone:
+                    type: string
+                    minLength: 11
+                    maxLength: 11
+                tipo_usuario:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                email:
+                    type: string
+                    format: email
+                    maxLength: 255
+                password:
+                    type: string
+                    format: password
+                password_confirmation:
+                    type: string
+                    format: password
+                chave_pix:
+                    type: string
+                    minLength: 11
+                    maxLength: 255
+            required:
+                - nome_completo
+                - cpf
+                - nascimento
+                - foto_documento
+                - telefone
+                - tipo_usuario
+                - email
+                - password
+                - password_confirmation
+        CriarUsuarioResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                nome_completo:
+                    type: string
+                cpf:
+                    type: string
+                nascimento:
+                    type: string
+                    format: date
+                email:
+                    type: string
+                    format: email
+                telefone:
+                    type: string
+                foto_usuario:
+                    type: string
+                    format: uri
+                tipo_usuario:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                chave_pix:
+                    type: string
+                token:
+                    $ref: "#/components/schemas/TokenResponse"
+                links:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/LinkResponse"
+        TokenResponse:
+            type: object
+            properties:
+                acesso:
+                    type: string
+                refresh:
+                    type: string
+                token_tipo:
+                    type: string
+                expira_em:
+                    type: integer
+        CredenciaisRequest:
+            type: object
+            required:
+                - email
+                - password
+            properties:
+                email:
+                    type: string
+                    format: email
+                password:
+                    type: string
+                    format: password
+        RefreshRequest:
+            type: object
+            required:
+                - refresh
+            properties:
+                refresh:
+                    type: string
+        EuResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                nome_completo:
+                    type: string
+                cpf:
+                    type: string
+                nascimento:
+                    type: string
+                    format: date
+                email:
+                    type: string
+                    format: email
+                telefone:
+                    type: string
+                foto_usuario:
+                    type: string
+                    format: uri
+                tipo_usuario:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                chave_pix:
+                    type: string
+                links:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/LinkResponse"
+        DiariaRequest:
+            type: object
+            required:
+                - data_atendimento
+                - tempo_atendimento
+                - preco
+                - logradouro
+                - numero
+                - bairro
+                - cidade
+                - estado
+                - codigo_ibge
+                - cep
+                - quantidade_quartos
+                - quantidade_salas
+                - quantidade_cozinhas
+                - quantidade_banheiros
+                - quantidade_quintais
+                - quantidade_outros
+                - servico
+            properties:
+                data_atendimento:
+                    type: string
+                    format: date-time
+                tempo_atendimento:
+                    type: integer
+                preco:
+                    type: number
+                    format: double
+                logradouro:
+                    type: string
+                numero:
+                    type: string
+                complemento:
+                    type: string
+                bairro:
+                    type: string
+                cidade:
+                    type: string
+                estado:
+                    type: string
+                codigo_ibge:
+                    type: string
+                cep:
+                    type: string
+                quantidade_quartos:
+                    type: integer
+                quantidade_salas:
+                    type: integer
+                quantidade_cozinhas:
+                    type: integer
+                quantidade_banheiros:
+                    type: integer
+                quantidade_quintais:
+                    type: integer
+                quantidade_outros:
+                    type: integer
+                observacoes:
+                    type: string
+                servico:
+                    type: integer
+        DiariaResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                status:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                        - 3
+                        - 4
+                        - 5
+                        - 6
+                valor_comissao:
+                    type: number
+                    format: double
+                nome_servico:
+                    type: string
+                cliente:
+                    $ref: "#/components/schemas/UsuarioDiariaRequest"
+                data_atendimento:
+                    type: string
+                    format: date-time
+                tempo_atendimento:
+                    type: integer
+                preco:
+                    type: number
+                    format: double
+                logradouro:
+                    type: string
+                numero:
+                    type: string
+                complemento:
+                    type: string
+                bairro:
+                    type: string
+                cidade:
+                    type: string
+                cep:
+                    type: string
+                estado:
+                    type: string
+                codigo_ibge:
+                    type: string
+                quantidade_quartos:
+                    type: integer
+                quantidade_salas:
+                    type: integer
+                quantidade_cozinhas:
+                    type: integer
+                quantidade_banheiros:
+                    type: integer
+                quantidade_quintais:
+                    type: integer
+                quantidade_outros:
+                    type: integer
+                observacoes:
+                    type: string
+                motivo_cancelamento:
+                    type: string
+                created_at:
+                    type: string
+                    format: date-time
+                updated_at:
+                    type: string
+                    format: date-time
+                servico:
+                    type: integer
+                diarista:
+                    $ref: "#/components/schemas/UsuarioDiariaRequest"
+                links:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/LinkResponse"
+        UsuarioDiariaRequest:
+            type: object
+            properties:
+                id:
+                    type: integer
+                nome_completo:
+                    type: string
+                nascimento:
+                    type: string
+                    format: date
+                telefone:
+                    type: string
+                reputacao:
+                    type: number
+                    format: double
+                tipo_usuario:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                foto_usuario:
+                    type: string
+        PagamentoRequest:
+            type: object
+            required:
+                - card_hash
+            properties:
+                card_hash:
+                    type: string
+        MensagemResponse:
+            type: object
+            properties:
+                mensagem:
+                    type: string
+        UsuarioEnderecoRequest:
+            type: object
+            required:
+                - logradouro
+                - numero
+                - bairro
+                - cidade
+                - estado
+                - cep
+            properties:
+                logradouro:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+                numero:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                complemento:
+                    type: string
+                    maxLength: 255
+                bairro:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+                cidade:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+                estado:
+                    type: string
+                    minLength: 2
+                    maxLength: 2
+                cep:
+                    type: string
+                    minLength: 8
+                    maxLength: 8
+        UsuarioEnderecoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                logradouro:
+                    type: string
+                numero:
+                    type: string
+                complemento:
+                    type: string
+                bairro:
+                    type: string
+                cidade:
+                    type: string
+                estado:
+                    type: string
+                cep:
+                    type: string
+        UsuarioCidadesAtendidasRequest:
+            type: object
+            required:
+                - cidades
+            properties:
+                cidades:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/UsuarioCidadeAtendidaRequest"
+        UsuarioCidadeAtendidaRequest:
+            type: object
+            required:
+                - cidade
+                - codigo_ibge
+            properties:
+                cidade:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+                codigo_ibge:
+                    type: string
+        UsuarioCidadeAtendidaResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                cidade:
+                    type: string
+                estado:
+                    type: string
+                codigo_ibge:
+                    type: string
+        OportunidadeResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                status:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                        - 3
+                        - 4
+                        - 5
+                        - 6
+                valor_comissao:
+                    type: number
+                    format: double
+                nome_servico:
+                    type: string
+                cliente:
+                    $ref: "#/components/schemas/UsuarioDiariaRequest"
+                data_atendimento:
+                    type: string
+                    format: date-time
+                tempo_atendimento:
+                    type: integer
+                preco:
+                    type: number
+                    format: double
+                logradouro:
+                    type: string
+                numero:
+                    type: string
+                complemento:
+                    type: string
+                bairro:
+                    type: string
+                cidade:
+                    type: string
+                cep:
+                    type: string
+                estado:
+                    type: string
+                codigo_ibge:
+                    type: string
+                quantidade_quartos:
+                    type: integer
+                quantidade_salas:
+                    type: integer
+                quantidade_cozinhas:
+                    type: integer
+                quantidade_banheiros:
+                    type: integer
+                quantidade_quintais:
+                    type: integer
+                quantidade_outros:
+                    type: integer
+                observacoes:
+                    type: string
+                motivo_cancelamento:
+                    type: string
+                created_at:
+                    type: string
+                    format: date-time
+                updated_at:
+                    type: string
+                    format: date-time
+                servico:
+                    type: integer
+                avaliacoes_cliente:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/AvaliacaoResponse"
+                links:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/LinkResponse"
+        AvaliacaoResponse:
+            type: object
+            properties:
+                descricao:
+                    type: string
+                nota:
+                    type: number
+                    format: double
+                nome_avaliador:
+                    type: string
+                foto_avaliador:
+                    type: string
+                    format: uri
+        AvaliacaoRequest:
+            type: object
+            required:
+                - descricao
+                - nota
+            properties:
+                descricao:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+                nota:
+                    type: number
+                    format: double
+                    minimum: 0
+                    maximum: 5
+        CancelarDiariaRequest:
+            type: object
+            required:
+                - motivo_cancelamento
+            properties:
+                motivo_cancelamento:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+        PagamentoResponse:
+            type: object
+            properties:
+                id:
+                    type: integer
+                status:
+                    type: integer
+                    enum:
+                        - 1
+                        - 2
+                valor_deposito:
+                    type: number
+                    format: double
+                valor:
+                    type: number
+                    format: double
+                created_at:
+                    type: string
+                    format: date-time
+        UpdateUsuarioRequest:
+            type: object
+            required:
+                - nome_completo
+                - cpf
+                - nascimento
+                - telefone
+                - email
+            properties:
+                nome_completo:
+                    type: string
+                    minLength: 3
+                    maxLength: 255
+                cpf:
+                    type: string
+                    minLength: 11
+                    maxLength: 11
+                nascimento:
+                    type: string
+                    format: date
+                telefone:
+                    type: string
+                    minLength: 11
+                    maxLength: 11
+                email:
+                    type: string
+                    format: email
+                    maxLength: 255
+                chave_pix:
+                    type: string
+                    minLength: 11
+                    maxLength: 255
+                password:
+                    type: string
+                    format: password
+                new_password:
+                    type: string
+                    format: password
+                password_confirmation:
+                    type: string
+                    format: password
+        FotoRequest:
+            type: object
+            required:
+                - foto_usuario
+            properties:
+                foto_usuario:
+                    type: string
+                    format: binary
+        ResetSenhaRequest:
+            type: object
+            required:
+                - email
+            properties:
+                email:
+                    type: string
+                    format: email
+                    maxLength: 255
+        ConfirmeResetSenhaRequest:
+            type: object
+            required:
+                - email
+                - password
+                - password_confirmation
+                - token
+            properties:
+                email:
+                    type: string
+                    format: email
+                    maxLength: 255
+                password:
+                    type: string
+                    format: password
+                password_confirmation:
+                    type: string
+                    format: password
+                token:
+                    type: string
+    securitySchemes:
+        JWT:
+            type: http
+            scheme: bearer
