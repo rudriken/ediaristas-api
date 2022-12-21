@@ -28,6 +28,7 @@ class Index extends HateoasBase implements HateoasInterface
             "solicitar_alteracao_senha",
             "usuarios.solicitar_alteracao_senha"
         );
+        $this->adicionaLink("POST", "confirmar_alteracao_senha", "usuarios.alterar_senha");
 
         return $this->links;
     }
