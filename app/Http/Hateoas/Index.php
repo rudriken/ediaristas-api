@@ -23,6 +23,11 @@ class Index extends HateoasBase implements HateoasInterface
         $this->adicionaLink("POST", "cadastrar_usuario", "usuarios.create");
         $this->adicionaLink("POST", "login", "autenticacao.login");
         $this->adicionaLink("GET", "usuario_logado", "usuarios.show");
+        $this->adicionaLink(
+            "POST",
+            "solicitar_alteracao_senha",
+            "usuarios.solicitar_alteracao_senha"
+        );
 
         return $this->links;
     }
