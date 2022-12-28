@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
@@ -32,7 +35,10 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
-		"files": ["app/Auxiliares/respostas.php", "app/Auxiliares/ativos.php"]
+        "files": [
+            "app/Auxiliares/respostas.php",
+            "app/Auxiliares/ativos.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -52,6 +58,12 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "scripts-de-producao": [
+            "@php artisan config:cache",
+            "@php artisan route:cache",
+            "@php artisan view:cache",
+            "@php artisan migrate --force"
         ]
     },
     "extra": {

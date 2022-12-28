@@ -3,13 +3,14 @@
 namespace App\Providers;
 
 use PagarMe\Client;
+use Laravel\Sanctum\Sanctum;
 use Illuminate\Support\ServiceProvider;
-use App\Servicos\Pagamento\Provedores\Pagarme;
 use App\Servicos\Pagamento\PagamentoInterface;
-use Illuminate\Http\Resources\Json\JsonResource;
+use App\Servicos\Pagamento\Provedores\Pagarme;
 use App\Servicos\ConsultaCidade\Provedores\Ibge;
-use App\Servicos\ConsultaCEP\ProvedoresCEP\ViaCEP;
+use Illuminate\Http\Resources\Json\JsonResource;
 use App\Servicos\ConsultaCEP\InterfaceConsultaCEP;
+use App\Servicos\ConsultaCEP\ProvedoresCEP\ViaCEP;
 use TeamPickr\DistanceMatrix\Licenses\StandardLicense;
 use App\Servicos\ConsultaCidade\ConsultaCidadeInterface;
 use App\Servicos\ConsultaDistancia\Provedores\GoogleMatrix;
@@ -17,7 +18,7 @@ use App\Servicos\ConsultaDistancia\ConsultaDistanciaInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
-    
+
     /**
      * Register any application services.
      *
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Sanctum::ignoreMigrations();
         $this->app->singleton(InterfaceConsultaCEP::class, function () {
             return new ViaCEP;
         });
