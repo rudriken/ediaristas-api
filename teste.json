@@ -1,3 +1,49 @@
 {
-    "base_url": "http://localhost:8000/api"
+    "links": [
+        {
+            "type": "GET",
+            "rel": "diaristas_cidade",
+            "uri": "http://localhost:8000/api/diaristas/localidades"
+        },
+        {
+            "type": "GET",
+            "rel": "verificar_disponibilidade_atendimento",
+            "uri": "http://localhost:8000/api/diaristas/disponibilidade"
+        },
+        {
+            "type": "GET",
+            "rel": "endereco_cep",
+            "uri": "http://localhost:8000/api/enderecos"
+        },
+        {
+            "type": "GET",
+            "rel": "listar_servicos",
+            "uri": "http://localhost:8000/api/servicos"
+        },
+        {
+            "type": "POST",
+            "rel": "cadastrar_usuario",
+            "uri": "http://localhost:8000/api/usuarios"
+        },
+        {
+            "type": "POST",
+            "rel": "login",
+            "uri": "http://localhost:8000/autenticacao/token"
+        },
+        {
+            "type": "GET",
+            "rel": "usuario_logado",
+            "uri": "http://localhost:8000/api/eu"
+        },
+        {
+            "type": "POST",
+            "rel": "solicitar_alteracao_senha",
+            "uri": "http://localhost:8000/api/recuperar-senha"
+        },
+        {
+            "type": "POST",
+            "rel": "confirmar_alteracao_senha",
+            "uri": "http://localhost:8000/api/recuperar-senha/confirme"
+        }
+    ]
 }
