@@ -59,9 +59,9 @@ class Handler extends ExceptionHandler
 	 * @return Response
 	 */
 	public function render($request, Throwable $e) {
-		if ($request->is("api/*") || $request->is("autenticacao/*")) {
-			return $this->pegarExcecaoJSON($e);
-		}
+		// if ($request->is("api/*") || $request->is("autenticacao/*")) {
+		// 	return $this->pegarExcecaoJSON($e);
+		// }
 		return parent::render($request, $e);
 	}
 }

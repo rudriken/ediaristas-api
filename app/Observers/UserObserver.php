@@ -20,7 +20,7 @@ class UserObserver
             $novoUsuario->reputacao = 5;
             return;
         }
-        $novoUsuario->reputacao = User::avg("reputacao");
+        $novoUsuario->reputacao = round(User::avg("reputacao"));
     }
 
     /**
