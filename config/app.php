@@ -61,6 +61,11 @@ return [
      */
     'client_web_url' => env('CLIENT_WEB_URL', 'http://localhost'),
 
+    /**
+     * Define a URL do bucket onde estão as imagens
+     */
+    'bucket_s3_url' => env('BUCKET_S3_URL', 'http://localhost'),
+
     'asset_url' => env('ASSET_URL'),
 
     /*

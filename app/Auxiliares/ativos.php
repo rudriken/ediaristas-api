@@ -11,7 +11,7 @@ if (!function_exists("foto_perfil")) {
     function foto_perfil(?string $caminhoRelativo): ?string
     {
         return $caminhoRelativo ?
-            sprintf("%s/%s", config("app.url"), $caminhoRelativo) :
+            sprintf("%s/%s", config("app.bucket_s3_url"), $caminhoRelativo) :
             $caminhoRelativo;
     }
 }
