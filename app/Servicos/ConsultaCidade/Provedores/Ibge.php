@@ -22,6 +22,7 @@ class Ibge implements ConsultaCidadeInterface
             "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/%s",
             $codigo
         );
+        dd($url);
         $resposta = Http::get($url)->throw();
         $dados = $resposta->json();
         if ($dados === []) {
