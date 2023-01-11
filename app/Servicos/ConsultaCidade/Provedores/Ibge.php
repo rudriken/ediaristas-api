@@ -23,7 +23,7 @@ class Ibge implements ConsultaCidadeInterface
             $codigo
         );
         // dd("$url: ", $url);
-        $resposta = Http::get($url)->throw();
+        $resposta = Http::get($url, [])->throw();
         dd($resposta);
         $dados = $resposta->json();
         if ($dados === []) {
