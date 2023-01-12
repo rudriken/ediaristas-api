@@ -1,9 +1,9 @@
 {
-    "id": 3170206,
-    "nome": "Uberlândia",
+    "id": 3127107,
+    "nome": "Frutal",
     "microrregiao": {
-        "id": 31018,
-        "nome": "Uberlândia",
+        "id": 31021,
+        "nome": "Frutal",
         "mesorregiao": {
             "id": 3105,
             "nome": "Triângulo Mineiro/Alto Paranaíba",
@@ -16,11 +16,11 @@
         }
     },
     "regiao-imediata": {
-        "id": 310059,
-        "nome": "Uberlândia",
+        "id": 310057,
+        "nome": "Frutal",
         "regiao-intermediaria": {
-            "id": 3111,
-            "nome": "Uberlândia",
+            "id": 3110,
+            "nome": "Uberaba",
             "UF": {
                 "id": 31,
                 "sigla": "MG",

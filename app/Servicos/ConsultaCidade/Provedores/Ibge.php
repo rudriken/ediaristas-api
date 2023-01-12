@@ -19,12 +19,10 @@ class Ibge implements ConsultaCidadeInterface
     public function codigoIBGE(int $codigo): CidadeResponse
     {
         $url = sprintf(
-            "https://servicodados.ibge.gov.br/api/v1/localidades/municipios/%s",
+            "http://servicodados.ibge.gov.br/api/v1/localidades/municipios/%s",
             $codigo
         );
-        // dd("$url: ", $url);
-        $resposta = Http::get($url, [])->throw();
-        dd($resposta);
+        $resposta = Http::get($url)->throw();
         $dados = $resposta->json();
         if ($dados === []) {
             throw ValidationException::withMessages([
