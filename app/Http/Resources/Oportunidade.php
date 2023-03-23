@@ -24,7 +24,7 @@ class Oportunidade extends JsonResource
             "cliente"               => [
                 "nome_completo"         => $this->cliente->nome_completo,
                 "reputacao"             => $this->cliente->reputacao,
-                "foto_usuario"          => $this->cliente->foto_usuario,
+                "foto_usuario"          => foto_perfil($this->cliente->foto_usuario),
             ],
 
             "data_atendimento"      => Carbon::parse($this->data_atendimento)
